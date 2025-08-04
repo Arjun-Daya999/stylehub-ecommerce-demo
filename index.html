@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StyleHub - Premium Fashion for Everyone</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Header */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #667eea;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+        }
+
+        .cart-icon {
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Demo Notice */
+        .demo-notice {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: sticky;
+            top: 70px;
+            z-index: 99;
+        }
+
+        .demo-notice strong {
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: white;
+            color: #667eea;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Category Navigation */
+        .category-nav {
+            background: #f8f9fa;
+            padding: 2rem 0;
+        }
+
+        .category-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-tab {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .category-tab.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .category-tab:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Product Grid */
+        .products-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(45deg, #f0f2f5, #e4e6ea);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #e74c3c;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .product-price {
+            color: #667eea;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-add-cart {
+            flex: 1;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-add-cart:hover {
+            background: #5a6fd8;
+        }
+
+        .btn-wishlist {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-wishlist:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        /* AI Assistant */
+        .ai-assistant {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chat-toggle {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-panel {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 400px;
+            height: 500px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+        }
+
+        .chat-panel.active {
+            display: flex;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-title {
+            font-weight: 600;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 15px;
+            max-width: 85%;
+        }
+
+        .message.bot {
+            background: white;
+            margin-right: auto;
+            border: 1px solid #e0e0e0;
+        }
+
+        .message.user {
+            background: #667eea;
+            color: white;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .message.loading {
+            background: white;
+            margin-right: auto;
+            border: 1px solid #e0e0e0;
+            font-style: italic;
+            color: #666;
+        }
+
+        .chat-input-area {
+            padding: 1rem;
+            border-top: 1px solid #e0e0e0;
+            background: white;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .chat-send {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* Quick Questions */
+        .quick-questions {
+            padding: 0.5rem 1rem 1rem;
+            background: white;
+        }
+
+        .quick-question {
+            background: #f0f2f5;
+            border: none;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        // Loading dots animation
+        .loading-dots {
+            display: inline-block;
+        }
+
+        .loading-dots::after {
+            content: '';
+            animation: dots 1.5s infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #ecf0f1;
+        }
+
+        .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .category-tabs {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .chat-panel {
+                width: 350px;
+                height: 450px;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="#" class="logo">StyleHub</a>
+            <ul class="nav-menu">
+                <li><a href="#mens">Men's</a></li>
+                <li><a href="#womens">Women's</a></li>
+                <li><a href="#accessories">Accessories</a></li>
+                <li><a href="#sale">Sale</a></li>
+            </ul>
+            <div class="nav-actions">
+                <input type="text" class="search-box" placeholder="Search products...">
+                <a href="#" class="cart-icon">🛒 Cart (0)</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Demo Notice -->
+    <div class="demo-notice">
+        <strong>🎯 Demo Mode:</strong> This is a prototype showcasing AI-powered e-commerce. Products are simulated - try asking the AI assistant questions about our inventory!
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Premium Fashion for Everyone</h1>
+            <p>Discover our curated collection of stylish clothing and accessories, now with AI-powered shopping assistance</p>
+            <a href="#products" class="cta-button">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Category Navigation -->
+    <section class="category-nav">
+        <div class="category-container">
+            <div class="category-tabs">
+                <div class="category-tab active" onclick="showCategory('featured')">Featured</div>
+                <div class="category-tab" onclick="showCategory('mens')">Men's</div>
+                <div class="category-tab" onclick="showCategory('womens')">Women's</div>
+                <div class="category-tab" onclick="showCategory('accessories')">Accessories</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be dynamically loaded here -->
+        </div>
+    </section>
+
+    <!-- AI Assistant -->
+    <div class="ai-assistant">
+        <button class="chat-toggle" onclick="toggleChat()">🤖</button>
+        <div class="chat-panel" id="chatPanel">
+            <div class="chat-header">
+                <span class="chat-title">👋 StyleHub AI Assistant</span>
+                <button class="chat-close" onclick="toggleChat()">✕</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    Hi! I'm your StyleHub shopping assistant! I can help you find products, check prices, sizes, and answer questions about our policies. What can I help you find today?
+                </div>
+            </div>
+            <div class="quick-questions">
+                <button class="quick-question" onclick="askQuestion('What is your cheapest men\'s shirt?')">What's your cheapest men's shirt?</button>
+                <button class="quick-question" onclick="askQuestion('Do you have any dresses under $50?')">Any dresses under $50?</button>
+                <button class="quick-question" onclick="askQuestion('What is your return policy?')">What's your return policy?</button>
+            </div>
+            <div class="chat-input-area">
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask about products, sizes, policies..." onkeypress="handleKeyPress(event)">
+                    <button class="chat-send" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <a href="#">Contact Us</a>
+                <a href="#">Size Guide</a>
+                <a href="#">Shipping Info</a>
+                <a href="#">Returns & Exchanges</a>
+            </div>
+            <div class="footer-section">
+                <h3>Company</h3>
+                <a href="#">About StyleHub</a>
+                <a href="#">Careers</a>
+                <a href="#">Sustainability</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <a href="#">Instagram</a>
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Newsletter</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 StyleHub. All rights reserved. | AI-Powered Shopping Experience</p>
+        </div>
+    </footer>
+
+    <script>
+        // Configuration - Updated with your correct n8n webhook URL
+        const USE_LOCAL_URL = true;
+        const LOCAL_WEBHOOK_URL = 'http://localhost:5678/webhook-test/204ffc19-8edc-4630-a7dc-bd62d9143ef7';
+        const PUBLIC_WEBHOOK_URL = 'https://your-ngrok-url.ngrok-free.app/webhook-test/204ffc19-8edc-4630-a7dc-bd62d9143ef7'; // Update when using ngrok
+        
+        const WEBHOOK_URL = USE_LOCAL_URL ? LOCAL_WEBHOOK_URL : PUBLIC_WEBHOOK_URL;
+
+        // Product Data
+        const products = {
+            featured: [
+                { id: 1, name: "Classic White Button-Up", price: 49.99, category: "mens", image: "👔", description: "Timeless professional shirt", badge: "Popular" },
+                { id: 2, name: "Little Black Dress", price: 79.99, category: "womens", image: "👗", description: "Perfect for any occasion", badge: "Bestseller" },
+                { id: 3, name: "Business Casual Chinos", price: 54.99, category: "mens", image: "👖", description: "Versatile and comfortable", badge: "" },
+                { id: 4, name: "Cashmere Sweater", price: 119.99, category: "womens", image: "🧥", description: "Luxuriously soft", badge: "Premium" },
+                { id: 5, name: "Basic Cotton T-Shirt", price: 19.99, category: "mens", image: "👕", description: "Essential wardrobe staple", badge: "Great Value" },
+                { id: 6, name: "Floral Summer Dress", price: 49.99, category: "womens", image: "🌺", description: "Perfect for warm weather", badge: "" }
+            ],
+            mens: [
+                { id: 1, name: "Classic White Button-Up", price: 49.99, category: "mens", image: "👔", description: "Timeless professional shirt" },
+                { id: 5, name: "Basic Cotton T-Shirt", price: 19.99, category: "mens", image: "👕", description: "Essential wardrobe staple" },
+                { id: 7, name: "Premium Oxford Shirt", price: 59.99, category: "mens", image: "👔", description: "Sophisticated button-down" },
+                { id: 8, name: "Classic Dark Jeans", price: 79.99, category: "mens", image: "👖", description: "Premium denim with stretch" },
+                { id: 9, name: "Casual Polo Shirt", price: 34.99, category: "mens", image: "👕", description: "Comfortable everyday wear" },
+                { id: 10, name: "Classic Blazer", price: 149.99, category: "mens", image: "🧥", description: "Versatile business jacket" }
+            ],
+            womens: [
+                { id: 2, name: "Little Black Dress", price: 79.99, category: "womens", image: "👗", description: "Perfect for any occasion" },
+                { id: 4, name: "Cashmere Sweater", price: 119.99, category: "womens", image: "🧥", description: "Luxuriously soft" },
+                { id: 6, name: "Floral Summer Dress", price: 49.99, category: "womens", image: "🌺", description: "Perfect for warm weather" },
+                { id: 11, name: "Classic White Blouse", price: 44.99, category: "womens", image: "👔", description: "Versatile professional top" },
+                { id: 12, name: "High-Waisted Jeans", price: 69.99, category: "womens", image: "👖", description: "Flattering skinny fit" },
+                { id: 13, name: "Casual Maxi Dress", price: 39.99, category: "womens", image: "👗", description: "Comfortable everyday wear" }
+            ],
+            accessories: [
+                { id: 14, name: "Leather Belt", price: 29.99, category: "accessories", image: "🔗", description: "Classic leather with silver buckle" },
+                { id: 15, name: "Silk Scarf", price: 34.99, category: "accessories", image: "🧣", description: "Elegant square scarf" },
+                { id: 16, name: "Leather Handbag", price: 89.99, category: "accessories", image: "👜", description: "Structured bag with strap" },
+                { id: 17, name: "Statement Necklace", price: 19.99, category: "accessories", image: "📿", description: "Bold gold-plated necklace" }
+            ]
+        };
+
+        // Load products
+        function showCategory(category) {
+            // Update active tab
+            document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Load products for category
+            const productsGrid = document.getElementById('productsGrid');
+            const categoryProducts = products[category] || [];
+            
+            productsGrid.innerHTML = categoryProducts.map(product => `
+                <div class="product-card" onclick="viewProduct(${product.id})">
+                    <div class="product-image">
+                        ${product.image}
+                        ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">$${product.price}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-actions">
+                            <button class="btn-add-cart" onclick="addToCart(${product.id}, event)">Add to Cart</button>
+                            <button class="btn-wishlist" onclick="addToWishlist(${product.id}, event)">♡</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize with featured products
+        document.addEventListener('DOMContentLoaded', () => {
+            showCategory('featured');
+        });
+
+        // Product interactions
+        function viewProduct(id) {
+            // In a real app, this would navigate to product detail page
+            const product = Object.values(products).flat().find(p => p.id === id);
+            if (product) {
+                askQuestion(`Tell me more about the ${product.name}`);
+                toggleChat();
+            }
+        }
+
+        function addToCart(id, event) {
+            event.stopPropagation();
+            // Simulate add to cart
+            alert('🛒 Product added to cart! (Demo mode - not functional)');
+        }
+
+        function addToWishlist(id, event) {
+            event.stopPropagation();
+            // Simulate add to wishlist
+            event.target.innerHTML = '♥';
+            event.target.style.color = '#e74c3c';
+        }
+
+        // Chat functionality
+        function toggleChat() {
+            const chatPanel = document.getElementById('chatPanel');
+            chatPanel.classList.toggle('active');
+        }
+
+        function askQuestion(question) {
+            const chatInput = document.getElementById('chatInput');
+            chatInput.value = question;
+            sendMessage();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const button = document.querySelector('.chat-send');
+            const question = input.value.trim();
+            
+            if (!question) return;
+            
+            // Disable input and button
+            input.disabled = true;
+            button.disabled = true;
+            button.textContent = 'Thinking...';
+            
+            // Add user message
+            addMessage(question, 'user');
+            
+            // Add loading message
+            const loadingId = addMessage('Analyzing our product catalog and policies<span class="loading-dots"></span>', 'loading');
+            
+            // Clear input
+            input.value = '';
+            
+            // Try webhook URLs in order of preference
+            const webhookUrls = [
+                WEBHOOK_URL,
+                WEBHOOK_URL.replace('/webhook-test/', '/webhook/'),
+                'http://localhost:5678/webhook/204ffc19-8edc-4630-a7dc-bd62d9143ef7',
+                'http://127.0.0.1:5678/webhook-test/204ffc19-8edc-4630-a7dc-bd62d9143ef7'
+            ];
+            
+            let success = false;
+            let lastError = null;
+            
+            for (const url of webhookUrls) {
+                try {
+                    console.log(`Trying webhook URL: ${url}`);
+                    
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ question: question }),
+                        mode: 'cors'
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    console.log('Response received:', data);
+                    
+                    // Remove loading message
+                    removeMessage(loadingId);
+                    
+                    // Extract and format AI response
+                    let aiResponse = '';
+                    
+                    // Handle different response formats from n8n
+                    if (Array.isArray(data) && data.length > 0) {
+                        // If response is an array, take the first item
+                        aiResponse = data[0].response || data[0].answer || data[0].text || '';
+                    } else if (data.response) {
+                        aiResponse = data.response;
+                    } else if (data.answer) {
+                        aiResponse = data.answer;
+                    } else if (data.text) {
+                        aiResponse = data.text;
+                    } else {
+                        aiResponse = JSON.stringify(data);
+                    }
+                    
+                    // Clean up formatting: replace \n\n with proper line breaks and \n* with bullet points
+                    aiResponse = aiResponse
+                        .replace(/\\n\\n/g, '<br><br>')  // Double line breaks
+                        .replace(/\\n\*/g, '<br>•')     // Bullet points  
+                        .replace(/\\n/g, '<br>')       // Single line breaks
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold text
+                        // Handle numbered lists (1. 2. 3. 4.)
+                        .replace(/(\d+)\.\s*\*\*(.*?)\*\*/g, '<br><br><strong>$1. $2</strong><br>')
+                        .replace(/(\d+)\.\s*([^<\n]*?):/g, '<br><br><strong>$1. $2:</strong>')
+                        // Clean up asterisks that aren't part of formatting
+                        .replace(/\*\s+\*\*/g, '<br>• <strong>')
+                        .replace(/\*\s+([^*\n]+)/g, '<br>• $1')
+                        .replace(/\*([^*\n]+?):\*\*/g, '<br>• <strong>$1:</strong>')
+                        // Clean up remaining single asterisks
+                        .replace(/\*\s*/g, '')
+                        .trim();
+                    
+                    // If response is still empty or just formatting, provide fallback
+                    if (!aiResponse || aiResponse.length < 10) {
+                        aiResponse = 'I received your question but encountered an issue generating a properly formatted response. Please try asking about our products, prices, or store policies.';
+                    }
+                    
+                    addMessage(aiResponse, 'bot');
+                    
+                    success = true;
+                    break;
+                    
+                } catch (error) {
+                    console.error(`Failed with URL ${url}:`, error);
+                    lastError = error;
+                    continue;
+                }
+            }
+            
+            if (!success) {
+                // Remove loading message
+                removeMessage(loadingId);
+                
+                // Add detailed error message
+                const errorMsg = `
+                    <strong>Connection Error:</strong><br>
+                    Unable to connect to the StyleHub product database. Please check:<br><br>
+                    
+                    <strong>1. n8n Workflow Status:</strong><br>
+                    • Is your n8n workflow <strong>Active</strong>?<br>
+                    • Is it showing "Waiting for trigger event from Chat Webhook"?<br><br>
+                    
+                    <strong>2. Webhook URL:</strong><br>
+                    • Check the Chat Webhook node for the correct URL<br>
+                    • Test URL: <code>http://localhost:5678/webhook-test/204ffc19-8edc-4630-a7dc-bd62d9143ef7</code><br><br>
+                    
+                    <strong>Technical Details:</strong><br>
+                    Last error: ${lastError?.message || 'Connection failed'}
+                `;
+                
+                addMessage(errorMsg, 'bot');
+            }
+            
+            // Re-enable input and button
+            input.disabled = false;
+            button.disabled = false;
+            button.textContent = 'Send';
+            input.focus();
+        }
+
+        function addMessage(text, type) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageId = 'msg-' + Date.now();
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.id = messageId;
+            
+            if (type === 'bot' || type === 'loading') {
+                messageDiv.innerHTML = text;
+            } else {
+                messageDiv.textContent = text;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            return messageId;
+        }
+
+        function removeMessage(messageId) {
+            const message = document.getElementById(messageId);
+            if (message) {
+                message.remove();
+            }
+        }
+    </script>
+</body>
+</html>
