@@ -765,6 +765,7 @@
 
     <script>
         // Configuration - Updated with your correct ngrok URL for public access
+        // Set to true for local testing, false for demo with ngrok
         const USE_LOCAL_URL = false;
         const LOCAL_WEBHOOK_URL = 'http://localhost:5678/webhook-test/204ffc19-8edc-4630-a7dc-bd62d9143ef7';
         const PUBLIC_WEBHOOK_URL = 'https://c013f0b2fde7.ngrok-free.app/webhook-test/204ffc19-8edc-4630-a7dc-bd62d9143ef7';
@@ -1082,42 +1083,34 @@
 
         // Make product links clickable and functional - WOW FACTOR!
         function makeProductLinksClickable(text) {
-            // Detect various product link patterns
-            const linkPatterns = [
-                // Pattern: /products/product-name
-                /\/products\/([a-z-]+)/gi,
-                // Pattern: product page links
-                /product page[:\s]*([a-z-\s]+)/gi,
-                // Pattern: "view [product name]" or "see [product name]"
-                /(?:view|see|check out|find)\s+(?:the\s+)?([a-z\s]+?)\s+(?:here|product|item)/gi
-            ];
-
             let processedText = text;
-            
-            // Look for specific product names in the response and make them clickable
             const allProducts = Object.values(products).flat();
             
-            linkPatterns.forEach(pattern => {
-                processedText = processedText.replace(pattern, (match, productSlug) => {
-                    // Try to find matching product
-                    const cleanSlug = productSlug.toLowerCase().replace(/[-\s]+/g, ' ').trim();
-                    const matchingProduct = allProducts.find(p => 
-                        p.name.toLowerCase().includes(cleanSlug) ||
-                        cleanSlug.includes(p.name.toLowerCase().split(' ')[0].toLowerCase()) ||
-                        p.name.toLowerCase().replace(/[^a-z\s]/g, '').includes(cleanSlug.replace(/[^a-z\s]/g, ''))
-                    );
-                    
-                    if (matchingProduct) {
-                        return `<a href="#" class="product-link" onclick="showProductFromChat(${matchingProduct.id})" style="color: #667eea; font-weight: bold; text-decoration: underline; cursor: pointer;">${match}</a>`;
-                    }
-                    return match;
-                });
+            // 1. Handle direct /products/product-name links
+            processedText = processedText.replace(/\/products\/([a-z-]+)/gi, (match, slug) => {
+                // Convert slug back to product name (e.g., "floral-summer-dress" -> "floral summer dress")
+                const productName = slug.replace(/-/g, ' ');
+                const matchingProduct = allProducts.find(p => 
+                    p.name.toLowerCase().includes(productName) || 
+                    productName.includes(p.name.toLowerCase()) ||
+                    // More flexible matching
+                    p.name.toLowerCase().split(' ').some(word => productName.includes(word) && word.length > 3)
+                );
+                
+                if (matchingProduct) {
+                    return `<a href="#" class="product-link" onclick="showProductFromChat(${matchingProduct.id})" style="color: #667eea; font-weight: bold; text-decoration: underline; cursor: pointer; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); padding: 2px 6px; border-radius: 4px;">${match}</a>`;
+                }
+                return match;
             });
 
-            // Also handle direct product mentions by name
+            // 2. Handle direct product name mentions (like "Floral Summer Dress")
             allProducts.forEach(product => {
                 const productNameRegex = new RegExp(`\\b${product.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi');
                 processedText = processedText.replace(productNameRegex, (match) => {
+                    // Don't double-wrap already linked products
+                    if (processedText.includes(`onclick="showProductFromChat(${product.id})"`)) {
+                        return match;
+                    }
                     return `<a href="#" class="product-link" onclick="showProductFromChat(${product.id})" style="color: #667eea; font-weight: bold; text-decoration: underline; cursor: pointer; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); padding: 2px 6px; border-radius: 4px; transition: all 0.3s ease;" onmouseover="this.style.background='linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2))'" onmouseout="this.style.background='linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1))'">${match}</a>`;
                 });
             });
