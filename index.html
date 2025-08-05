@@ -18,13 +18,15 @@
             background: #fff;
         }
 
-        /* Header */
+        /* Header with Glassmorphism */
         .header {
-            background: #fff;
-            border-bottom: 1px solid #e0e0e0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.1);
         }
 
         .nav-container {
@@ -40,8 +42,20 @@
         .logo {
             font-size: 2rem;
             font-weight: 700;
-            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            background: linear-gradient(135deg, #5a6fd8, #6a5acd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transform: scale(1.05);
         }
 
         .nav-menu {
@@ -95,6 +109,18 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            z-index: 2;
+            position: relative;
         }
 
         .hero::before {
@@ -355,17 +381,32 @@
             width: 60px;
             height: 60px;
             background: linear-gradient(135deg, #667eea, #764ba2);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite, pulseGlow 2s ease-in-out infinite alternate;
             border-radius: 50%;
             border: none;
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
             box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
-            transition: transform 0.3s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
 
         .chat-toggle:hover {
-            transform: scale(1.1);
+            transform: scale(1.15) rotate(10deg);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
+            animation: gradientShift 4s ease infinite, pulseGlow 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { 
+                box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+            }
+            100% { 
+                box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6), 0 0 20px rgba(118, 75, 162, 0.4);
+            }
         }
 
         .chat-panel {
@@ -374,11 +415,13 @@
             right: 0;
             width: 400px;
             height: 500px;
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
             display: none;
             flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .chat-panel.active {
@@ -488,7 +531,7 @@
             transition: background 0.3s;
         }
 
-        // Loading dots animation
+        /* Loading dots animation */
         .loading-dots {
             display: inline-block;
         }
@@ -546,6 +589,37 @@
             color: #bdc3c7;
         }
 
+        /* Notification System for WOW Factor */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            z-index: 10000;
+            transform: translateX(400px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            float: right;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .nav-menu {
@@ -569,6 +643,17 @@
             .products-grid {
                 grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             }
+
+            .notification {
+                right: 10px;
+                left: 10px;
+                transform: translateY(-100px);
+                width: auto;
+            }
+
+            .notification.show {
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -578,10 +663,10 @@
         <nav class="nav-container">
             <a href="#" class="logo">StyleHub</a>
             <ul class="nav-menu">
-                <li><a href="#mens">Men's</a></li>
-                <li><a href="#womens">Women's</a></li>
-                <li><a href="#accessories">Accessories</a></li>
-                <li><a href="#sale">Sale</a></li>
+                <li><a href="#mens" onclick="navigateToCategory('mens', event)">Men's</a></li>
+                <li><a href="#womens" onclick="navigateToCategory('womens', event)">Women's</a></li>
+                <li><a href="#accessories" onclick="navigateToCategory('accessories', event)">Accessories</a></li>
+                <li><a href="#sale" onclick="navigateToCategory('featured', event)">Sale</a></li>
             </ul>
             <div class="nav-actions">
                 <input type="text" class="search-box" placeholder="Search products...">
@@ -605,10 +690,10 @@
     <section class="category-nav">
         <div class="category-container">
             <div class="category-tabs">
-                <div class="category-tab active" onclick="showCategory('featured')">Featured</div>
-                <div class="category-tab" onclick="showCategory('mens')">Men's</div>
-                <div class="category-tab" onclick="showCategory('womens')">Women's</div>
-                <div class="category-tab" onclick="showCategory('accessories')">Accessories</div>
+                <div class="category-tab active" onclick="showCategory('featured', this)">Featured</div>
+                <div class="category-tab" onclick="showCategory('mens', this)">Men's</div>
+                <div class="category-tab" onclick="showCategory('womens', this)">Women's</div>
+                <div class="category-tab" onclick="showCategory('accessories', this)">Accessories</div>
             </div>
         </div>
     </section>
@@ -721,10 +806,30 @@
         };
 
         // Load products
-        function showCategory(category) {
-            // Update active tab
+        function showCategory(category, targetElement = null) {
+            // Update active tab - handle both click events and direct calls
             document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
+            if (targetElement) {
+                targetElement.classList.add('active');
+            } else {
+                // Find the right tab to activate based on category
+                const tabToActivate = document.querySelector(`.category-tab[onclick*="${category}"]`);
+                if (tabToActivate) {
+                    tabToActivate.classList.add('active');
+                }
+            }
+
+            // Update section title dynamically
+            const sectionTitle = document.querySelector('.section-title');
+            const categoryTitles = {
+                'featured': 'Featured Products',
+                'mens': "Men's Collection",
+                'womens': "Women's Collection",
+                'accessories': 'Accessories'
+            };
+            if (sectionTitle) {
+                sectionTitle.textContent = categoryTitles[category] || 'Products';
+            }
 
             // Load products for category
             const productsGrid = document.getElementById('productsGrid');
@@ -747,11 +852,25 @@
                     </div>
                 </div>
             `).join('');
+
+            // Smooth scroll to products section
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Initialize with featured products
+        // Navigation function for header links
+        function navigateToCategory(category, event) {
+            event.preventDefault();
+            showCategory(category);
+        }
+
+        // Initialize with featured products - Enhanced to ensure loading
         document.addEventListener('DOMContentLoaded', () => {
-            showCategory('featured');
+            // Force show featured products immediately
+            setTimeout(() => {
+                // Find the featured tab and activate it properly
+                const featuredTab = document.querySelector('.category-tab[onclick*="featured"]');
+                showCategory('featured', featuredTab);
+            }, 100);
         });
 
         // Product interactions
@@ -884,6 +1003,9 @@
                         .replace(/\*\s*/g, '')
                         .trim();
                     
+                    // Make product links clickable and functional
+                    aiResponse = makeProductLinksClickable(aiResponse);
+                    
                     // If response is still empty or just formatting, provide fallback
                     if (!aiResponse || aiResponse.length < 10) {
                         aiResponse = 'I received your question but encountered an issue generating a properly formatted response. Please try asking about our products, prices, or store policies.';
@@ -956,6 +1078,139 @@
             if (message) {
                 message.remove();
             }
+        }
+
+        // Make product links clickable and functional - WOW FACTOR!
+        function makeProductLinksClickable(text) {
+            // Detect various product link patterns
+            const linkPatterns = [
+                // Pattern: /products/product-name
+                /\/products\/([a-z-]+)/gi,
+                // Pattern: product page links
+                /product page[:\s]*([a-z-\s]+)/gi,
+                // Pattern: "view [product name]" or "see [product name]"
+                /(?:view|see|check out|find)\s+(?:the\s+)?([a-z\s]+?)\s+(?:here|product|item)/gi
+            ];
+
+            let processedText = text;
+            
+            // Look for specific product names in the response and make them clickable
+            const allProducts = Object.values(products).flat();
+            
+            linkPatterns.forEach(pattern => {
+                processedText = processedText.replace(pattern, (match, productSlug) => {
+                    // Try to find matching product
+                    const cleanSlug = productSlug.toLowerCase().replace(/[-\s]+/g, ' ').trim();
+                    const matchingProduct = allProducts.find(p => 
+                        p.name.toLowerCase().includes(cleanSlug) ||
+                        cleanSlug.includes(p.name.toLowerCase().split(' ')[0].toLowerCase()) ||
+                        p.name.toLowerCase().replace(/[^a-z\s]/g, '').includes(cleanSlug.replace(/[^a-z\s]/g, ''))
+                    );
+                    
+                    if (matchingProduct) {
+                        return `<a href="#" class="product-link" onclick="showProductFromChat(${matchingProduct.id})" style="color: #667eea; font-weight: bold; text-decoration: underline; cursor: pointer;">${match}</a>`;
+                    }
+                    return match;
+                });
+            });
+
+            // Also handle direct product mentions by name
+            allProducts.forEach(product => {
+                const productNameRegex = new RegExp(`\\b${product.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi');
+                processedText = processedText.replace(productNameRegex, (match) => {
+                    return `<a href="#" class="product-link" onclick="showProductFromChat(${product.id})" style="color: #667eea; font-weight: bold; text-decoration: underline; cursor: pointer; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); padding: 2px 6px; border-radius: 4px; transition: all 0.3s ease;" onmouseover="this.style.background='linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2))'" onmouseout="this.style.background='linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1))'">${match}</a>`;
+                });
+            });
+
+            return processedText;
+        }
+
+        // Show product from chat - THE WOW FACTOR FEATURE!
+        function showProductFromChat(productId) {
+            // Find the product
+            const product = Object.values(products).flat().find(p => p.id === productId);
+            if (!product) return;
+
+            // Close the chat to show the product
+            toggleChat();
+
+            // Navigate to the correct category
+            showCategory(product.category === 'mens' ? 'mens' : product.category === 'womens' ? 'womens' : product.category === 'accessories' ? 'accessories' : 'featured');
+
+            // Wait for the products to load, then highlight the specific product
+            setTimeout(() => {
+                const productCard = document.querySelector(`[onclick="viewProduct(${productId})"]`);
+                if (productCard) {
+                    // Scroll to and highlight the product
+                    productCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Add special highlight effect
+                    productCard.style.transform = 'translateY(-20px) scale(1.05)';
+                    productCard.style.boxShadow = '0 30px 80px rgba(102, 126, 234, 0.4)';
+                    productCard.style.border = '3px solid #667eea';
+                    productCard.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(240, 243, 255, 0.95))';
+                    
+                    // Add pulsing glow effect
+                    const glowInterval = setInterval(() => {
+                        productCard.style.boxShadow = productCard.style.boxShadow.includes('rgba(102, 126, 234, 0.4)') 
+                            ? '0 30px 80px rgba(102, 126, 234, 0.6)' 
+                            : '0 30px 80px rgba(102, 126, 234, 0.4)';
+                    }, 1000);
+
+                    // Remove highlight after 5 seconds
+                    setTimeout(() => {
+                        clearInterval(glowInterval);
+                        productCard.style.transform = '';
+                        productCard.style.boxShadow = '';
+                        productCard.style.border = '';
+                        productCard.style.background = '';
+                        productCard.style.transition = 'all 0.5s ease';
+                    }, 5000);
+
+                    // Show a success message
+                    addMessage(`✨ Here's the ${product.name} you were asking about! It's highlighted above for $${product.price}. Would you like to know more about it?`, 'bot');
+                    
+                    // Show notification
+                    showNotification(`🎯 AI Magic: Found and highlighted "${product.name}" for you!`);
+                    
+                    // Auto-open chat again after a moment to continue the conversation
+                    setTimeout(() => {
+                        if (!document.getElementById('chatPanel').classList.contains('active')) {
+                            toggleChat();
+                        }
+                    }, 2000);
+                }
+            }, 500);
+        }
+
+        // Notification system for enhanced UX
+        function showNotification(message) {
+            // Remove any existing notifications
+            const existing = document.querySelector('.notification');
+            if (existing) {
+                existing.remove();
+            }
+
+            // Create new notification
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                ${message}
+                <button class="close-btn" onclick="this.parentElement.remove()">×</button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            // Auto-hide after 4 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 500);
+                }
+            }, 4000);
         }
     </script>
 </body>
