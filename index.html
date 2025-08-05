@@ -1167,8 +1167,13 @@
                         productCard.style.transition = 'all 0.5s ease';
                     }, 5000);
 
-                    // Show a success message
+                    // Show a success message with context
                     addMessage(`✨ Here's the ${product.name} you were asking about! It's highlighted above for $${product.price}. Would you like to know more about it?`, 'bot');
+                    
+                    // Send context to AI so it remembers what product we're discussing
+                    setTimeout(() => {
+                        sendContextMessage(`I just showed the customer the ${product.name} (${product.description}) for $${product.price}. They can see it highlighted on the page. If they ask follow-up questions, I'm referring to this specific product.`);
+                    }, 1000);
                     
                     // Show notification
                     showNotification(`🎯 AI Magic: Found and highlighted "${product.name}" for you!`);
@@ -1181,6 +1186,28 @@
                     }, 2000);
                 }
             }, 500);
+        }
+
+        // Send context message to AI (hidden from user) - MEMORY FIX!
+        async function sendContextMessage(contextText) {
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        question: contextText,
+                        isContext: true  // Flag to indicate this is context, not a user question
+                    }),
+                    mode: 'cors'
+                });
+                
+                // We don't need to handle the response since this is just context
+                console.log('Context sent to AI for memory preservation');
+            } catch (error) {
+                console.log('Context send failed, but continuing normally:', error);
+            }
         }
 
         // Notification system for enhanced UX
