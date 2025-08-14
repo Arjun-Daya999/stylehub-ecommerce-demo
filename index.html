@@ -900,6 +900,65 @@
         .cart-item-price {
             color: var(--secondary-gray);
             font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            background: var(--light-gray);
+            border: 1px solid var(--border-gray);
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .quantity-btn:hover {
+            background: var(--border-gray);
+        }
+
+        .quantity-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quantity-display {
+            font-weight: 600;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .remove-item-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .remove-item-btn:hover {
+            background: #dc2626;
         }
 
         .cart-recommendations {
@@ -1281,7 +1340,7 @@
             budget_range: [30, 150]
         };
 
-        // Enhanced product data with accurate matching images
+        // Product data with precisely matched images for each item
         const products = {
             featured: [
                 { 
@@ -1289,7 +1348,7 @@
                     name: "Classic White Button-Up", 
                     price: 49.99, 
                     category: "mens", 
-                    image: "Classic White Button-Up.png", 
+                    image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=600&fit=crop", 
                     description: "Timeless professional shirt perfect for business meetings", 
                     badge: "Popular",
                     aiRecommended: true 
@@ -1299,7 +1358,7 @@
                     name: "Basic Cotton T-Shirt", 
                     price: 19.99, 
                     category: "mens", 
-                    image: "Basic Cotton T-Shirt.png", 
+                    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=600&fit=crop", 
                     description: "Essential wardrobe staple in premium cotton", 
                     badge: "Great Value",
                     aiRecommended: false 
@@ -1319,7 +1378,7 @@
                     name: "Cashmere Sweater", 
                     price: 119.99, 
                     category: "womens", 
-                    image: "https://images.unsplash.com/photo-1577512111030-5d6e6c3b8e59?w=400&h=600&fit=crop", 
+                    image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=400&h=600&fit=crop", 
                     description: "Luxuriously soft premium cashmere", 
                     badge: "Premium",
                     aiRecommended: false 
@@ -1329,7 +1388,7 @@
                     name: "Business Casual Chinos", 
                     price: 54.99, 
                     category: "mens", 
-                    image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=600&fit=crop", 
+                    image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=400&h=600&fit=crop", 
                     description: "Versatile and comfortable for any setting", 
                     badge: "",
                     aiRecommended: true 
@@ -1339,24 +1398,24 @@
                     name: "Floral Summer Dress", 
                     price: 49.99, 
                     category: "womens", 
-                    image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&h=600&fit=crop", 
+                    image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=400&h=600&fit=crop", 
                     description: "Perfect for warm weather occasions", 
                     badge: "",
                     aiRecommended: false 
                 }
             ],
             mens: [
-                { id: 1, name: "Classic White Button-Up", price: 49.99, category: "mens", image: "Classic White Button-Up.png", description: "Timeless professional shirt perfect for business meetings", aiRecommended: true },
-                { id: 5, name: "Basic Cotton T-Shirt", price: 19.99, category: "mens", image: "Basic Cotton T-Shirt.png", description: "Essential wardrobe staple in premium cotton", aiRecommended: false },
+                { id: 1, name: "Classic White Button-Up", price: 49.99, category: "mens", image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=600&fit=crop", description: "Timeless professional shirt perfect for business meetings", aiRecommended: true },
+                { id: 5, name: "Basic Cotton T-Shirt", price: 19.99, category: "mens", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=600&fit=crop", description: "Essential wardrobe staple in premium cotton", aiRecommended: false },
                 { id: 7, name: "Premium Oxford Shirt", price: 59.99, category: "mens", image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&h=600&fit=crop", description: "Sophisticated button-down for professionals", aiRecommended: true },
                 { id: 8, name: "Classic Dark Jeans", price: 79.99, category: "mens", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=600&fit=crop", description: "Premium denim with perfect stretch", aiRecommended: false },
                 { id: 9, name: "Casual Polo Shirt", price: 34.99, category: "mens", image: "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=400&h=600&fit=crop", description: "Comfortable everyday wear", aiRecommended: false },
-                { id: 10, name: "Classic Blazer", price: 149.99, category: "mens", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop", description: "Versatile business jacket", aiRecommended: true }
+                { id: 10, name: "Classic Blazer", price: 149.99, category: "mens", image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=600&fit=crop", description: "Versatile business jacket", aiRecommended: true }
             ],
             womens: [
                 { id: 2, name: "Little Black Dress", price: 79.99, category: "womens", image: "https://images.unsplash.com/photo-1566479179817-c0c7bb2f0e6c?w=400&h=600&fit=crop", description: "Perfect for any occasion", aiRecommended: true },
-                { id: 4, name: "Cashmere Sweater", price: 119.99, category: "womens", image: "https://images.unsplash.com/photo-1577512111030-5d6e6c3b8e59?w=400&h=600&fit=crop", description: "Luxuriously soft premium cashmere", aiRecommended: false },
-                { id: 6, name: "Floral Summer Dress", price: 49.99, category: "womens", image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&h=600&fit=crop", description: "Perfect for warm weather occasions", aiRecommended: false },
+                { id: 4, name: "Cashmere Sweater", price: 119.99, category: "womens", image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=400&h=600&fit=crop", description: "Luxuriously soft premium cashmere", aiRecommended: false },
+                { id: 6, name: "Floral Summer Dress", price: 49.99, category: "womens", image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=400&h=600&fit=crop", description: "Perfect for warm weather occasions", aiRecommended: false },
                 { id: 11, name: "Classic White Blouse", price: 44.99, category: "womens", image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=600&fit=crop", description: "Versatile professional top", aiRecommended: true },
                 { id: 12, name: "High-Waisted Jeans", price: 69.99, category: "womens", image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400&h=600&fit=crop", description: "Flattering skinny fit", aiRecommended: false },
                 { id: 13, name: "Casual Maxi Dress", price: 39.99, category: "womens", image: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=400&h=600&fit=crop", description: "Comfortable everyday wear", aiRecommended: true }
@@ -1609,10 +1668,44 @@
                         </div>
                         <div class="cart-item-details">
                             <div class="cart-item-name">${item.name}</div>
-                            <div class="cart-item-price">$${item.price} × ${item.quantity}</div>
+                            <div class="cart-item-price">$${item.price} each</div>
+                            <div class="cart-item-actions">
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)" ${item.quantity <= 1 ? 'disabled' : ''}>−</button>
+                                    <span class="quantity-display">${item.quantity}</span>
+                                    <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                                </div>
+                                <button class="remove-item-btn" onclick="removeFromCart(${item.id})">Remove</button>
+                            </div>
                         </div>
                     </div>
                 `).join('');
+            }
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                    saveCart();
+                    updateCartRecommendations();
+                }
+            }
+        }
+
+        function removeFromCart(productId) {
+            const itemIndex = cart.findIndex(item => item.id === productId);
+            if (itemIndex > -1) {
+                const removedItem = cart[itemIndex];
+                cart.splice(itemIndex, 1);
+                updateCartUI();
+                saveCart();
+                updateCartRecommendations();
+                showNotification(`🗑️ ${removedItem.name} removed from cart`, 'success');
             }
         }
 
