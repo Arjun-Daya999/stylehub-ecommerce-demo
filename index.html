@@ -273,6 +273,12 @@
             gap: 2rem;
         }
 
+        /* Fix for single search results to prevent stretching */
+        .products-grid.single-result {
+            grid-template-columns: minmax(320px, 400px);
+            justify-content: center;
+        }
+
         /* Enhanced Product Cards */
         .product-card {
             background: #ffffff;
@@ -1139,6 +1145,11 @@
                 gap: 1.5rem;
             }
 
+            .products-grid.single-result {
+                grid-template-columns: minmax(280px, 350px);
+                justify-content: center;
+            }
+
             .search-box {
                 width: 200px;
             }
@@ -1464,10 +1475,10 @@
                 { id: 3, name: "Business Casual Chinos", price: 54.99, category: "mens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/business-casual-chinos.jpg", description: "Versatile and comfortable for any setting", aiRecommended: true },
                 { id: 18, name: "Leather Jacket", price: 299.99, category: "mens", image: "https://images.unsplash.com/photo-1520975954732-35dd22299614?w=400&h=600&fit=crop", description: "Classic leather jacket for a bold look", aiRecommended: false },
                 { id: 21, name: "Designer Dress Shirt", price: 89.99, category: "mens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Designer-Dress-Shirt.jpg", description: "Luxury dress shirt with French cuffs and spread collar", aiRecommended: false },
-                { id: 22, name: "Formal Dress Pants", price: 99.99, category: "mens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Formal-Dress-Pants.jpg", description: "Professional dress pants with flat front design", aiRecommended: false },
+                { id: 22, name: "Formal Dress Pants", price: 99.99, category: "mens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Formal%20Dress%20Pants.jpg", description: "Professional dress pants with flat front design", aiRecommended: false },
                 { id: 23, name: "Casual Hoodie", price: 44.99, category: "mens", image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=600&fit=crop", description: "Comfortable pullover hoodie with front pocket", aiRecommended: false },
-                { id: 24, name: "Casual Shorts", price: 39.99, category: "mens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Casual-Shorts.jpg", description: "Comfortable 9-inch inseam shorts for weekend activities", aiRecommended: false },
-                { id: 25, name: "Cotton Socks (3-Pack)", price: 24.99, category: "mens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Cotton-Socks.jpg", description: "Comfortable crew socks with reinforced heel and toe", aiRecommended: false }
+                { id: 24, name: "Casual Shorts", price: 39.99, category: "mens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Casual%20Shorts.jpg", description: "Comfortable 9-inch inseam shorts for weekend activities", aiRecommended: false },
+                { id: 25, name: "Cotton Socks (3-Pack)", price: 24.99, category: "mens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Cotton%20Socks.jpg", description: "Comfortable crew socks with reinforced heel and toe", aiRecommended: false }
             ],
             womens: [
                 { id: 2, name: "Casual Dress", price: 79.99, category: "womens", image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=600&fit=crop", description: "Perfect for any occasion", aiRecommended: true },
@@ -1478,15 +1489,15 @@
                 { id: 13, name: "Casual Maxi Dress", price: 39.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/casual-maxi-dress.jpg", description: "Comfortable everyday wear", aiRecommended: true },
                 { id: 19, name: "Denim Jacket", price: 59.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Denim-Jacket.jpg", description: "Classic denim jacket with button closure", aiRecommended: false },
                 { id: 26, name: "Business Professional Dress", price: 89.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Business-Professional-Dress.jpg", description: "Sophisticated sheath dress ideal for professional settings", aiRecommended: false },
-                { id: 27, name: "Cocktail Party Dress", price: 124.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Cocktail-Party-Dress.jpg", description: "Elegant midi dress with wrap design", aiRecommended: false },
-                { id: 28, name: "Casual T-Shirt", price: 24.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Casual-TShirt.jpg", description: "Soft, comfortable t-shirt with relaxed fit", aiRecommended: false },
-                { id: 29, name: "Silk Camisole", price: 59.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Silk-Camisole.jpg", description: "Elegant camisole with adjustable straps", aiRecommended: false },
-                { id: 30, name: "Knit Cardigan", price: 69.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Knit-Cardigan.jpg", description: "Cozy open-front cardigan with front pockets", aiRecommended: false },
-                { id: 31, name: "Dress Pants", price: 54.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Dress-Pants.jpg", description: "Professional straight-leg pants with comfortable stretch", aiRecommended: false },
+                { id: 27, name: "Cocktail Party Dress", price: 124.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Cocktail%20Party%20Dress.jpg", description: "Elegant midi dress with wrap design", aiRecommended: false },
+                { id: 28, name: "Casual T-Shirt", price: 24.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Casual%20TShirt.jpg", description: "Soft, comfortable t-shirt with relaxed fit", aiRecommended: false },
+                { id: 29, name: "Silk Camisole", price: 59.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Silk%20Camisole.jpg", description: "Elegant camisole with adjustable straps", aiRecommended: false },
+                { id: 30, name: "Knit Cardigan", price: 69.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Knit%20Cardigan.jpg", description: "Cozy open-front cardigan with front pockets", aiRecommended: false },
+                { id: 31, name: "Dress Pants", price: 54.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Dress%20Pants.jpg", description: "Professional straight-leg pants with comfortable stretch", aiRecommended: false },
                 { id: 32, name: "A-Line Skirt", price: 39.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/A-Line-Skirt.jpg", description: "Classic knee-length A-line skirt", aiRecommended: false },
                 { id: 33, name: "Leggings", price: 29.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Leggings.jpg", description: "High-performance leggings with four-way stretch", aiRecommended: false },
                 { id: 34, name: "Trench Coat", price: 149.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Trench-Coat.jpg", description: "Classic double-breasted trench coat with belt", aiRecommended: false },
-                { id: 35, name: "Wool Blazer", price: 99.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Wool-Blazer.jpg", description: "Tailored blazer with notched lapels", aiRecommended: false }
+                { id: 35, name: "Wool Blazer", price: 99.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Wool%20Blazer.jpg", description: "Tailored blazer with notched lapels", aiRecommended: false }
             ],
             accessories: [
                 { id: 14, name: "Leather Belt", price: 29.99, category: "accessories", image: "https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=400&h=400&fit=crop", description: "Classic leather with silver buckle", aiRecommended: false },
@@ -1585,6 +1596,9 @@
 
         function loadProducts(category) {
             const productsGrid = document.getElementById('productsGrid');
+            
+            // Reset grid class for normal categories
+            productsGrid.className = 'products-grid';
             
             // Special handling for sale category
             if (category === 'sale') {
@@ -2504,7 +2518,12 @@
                 product.category.toLowerCase().includes(query.toLowerCase())
             );
             
-            displaySearchResults(filteredProducts, query);
+            // Remove duplicates by ID
+            const uniqueProducts = filteredProducts.filter((product, index, self) => 
+                self.findIndex(p => p.id === product.id) === index
+            );
+            
+            displaySearchResults(uniqueProducts, query);
         }
 
         function handleSearchEnter(event) {
@@ -2530,6 +2549,10 @@
                 `;
                 return;
             }
+            
+            // Add special CSS class for single results to prevent stretching
+            const gridClass = results.length === 1 ? 'single-result' : '';
+            productsGrid.className = `products-grid ${gridClass}`;
             
             productsGrid.innerHTML = results.map(product => `
                 <div class="product-card" onclick="showProductFromChat(${product.id})">
