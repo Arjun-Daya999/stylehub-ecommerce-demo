@@ -1208,7 +1208,7 @@
     <section class="products-section" id="products">
         <div class="section-header">
             <h2 class="section-title">Featured Products</h2>
-            <div class="ai-powered-badge">AI-Curated</div>
+
         </div>
         <div class="products-grid" id="productsGrid">
             <!-- Products will be dynamically loaded here -->
@@ -1314,9 +1314,17 @@
                 <p style="font-size: 0.9rem; color: var(--secondary-gray); margin-top: 0.5rem;">Add some items to see our AI recommendations!</p>
             </div>
             <div id="cartItems"></div>
+            <div class="cart-total" id="cartTotal" style="display: none;">
+                <div style="border-top: 1px solid var(--border-gray); padding: 1rem; margin-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 600;">
+                        <span>Total:</span>
+                        <span id="cartTotalAmount">$0.00</span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="cart-recommendations" id="cartRecommendations" style="display: none;">
-            <h3 class="cart-rec-title">🤖 Complete Your Look</h3>
+            <h3 class="cart-rec-title">Other Recommended Items</h3>
             <div class="cart-rec-grid" id="cartRecGrid">
                 <!-- AI recommendations based on cart items -->
             </div>
@@ -1375,7 +1383,7 @@
             sizes: { tops: 'M', bottoms: '32', shoes: '10' },
             recent_purchases: [
                 { id: 1, name: "Classic White Button-Up", category: "mens", price: 49.99 },
-                { id: 8, name: "Classic Dark Jeans", category: "mens", price: 79.99 },
+                { id: 8, name: "Classic Dark Wash Jeans", category: "mens", price: 79.99 },
                 { id: 15, name: "Silk Scarf", category: "accessories", price: 34.99 }
             ],
             favorite_colors: ['black', 'white', 'navy', 'gray'],
@@ -1411,7 +1419,7 @@
                     price: 79.99, 
                     category: "womens", 
                     image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=600&fit=crop", 
-                    description: "Perfect for any occasion", 
+                    description: "Timeless little black dress perfect for cocktail parties", 
                     badge: "Bestseller",
                     aiRecommended: true 
                 },
@@ -1447,13 +1455,19 @@
                 }
             ],
             mens: [
-                { id: 1, name: "Classic White Button-Up", price: 49.99, category: "mens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Classic-White-Button-Up.jpg", description: "Timeless professional shirt perfect for business meetings", aiRecommended: true },
+                { id: 1, name: "Classic White Button-Up", price: 49.99, category: "mens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Classic-White-Button-Up.jpg", description: "Timeless professional shirt perfect for business meetings and formal occasions", aiRecommended: true },
                 { id: 5, name: "Basic Cotton T-Shirt", price: 19.99, category: "mens", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=600&fit=crop", description: "Essential wardrobe staple in premium cotton", aiRecommended: false },
                 { id: 7, name: "Premium Oxford Shirt", price: 59.99, category: "mens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/oxford-button-down.jpg", description: "Sophisticated button-down for professionals", aiRecommended: true },
-                { id: 8, name: "Classic Dark Jeans", price: 79.99, category: "mens", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=600&fit=crop", description: "Premium denim with perfect stretch", aiRecommended: false },
+                { id: 8, name: "Classic Dark Wash Jeans", price: 79.99, category: "mens", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=600&fit=crop", description: "Premium denim with slight stretch for comfort", aiRecommended: false },
                 { id: 9, name: "Casual Polo Shirt", price: 34.99, category: "mens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/polo-shirt.jpg", description: "Comfortable everyday wear", aiRecommended: false },
                 { id: 10, name: "Classic Blazer", price: 149.99, category: "mens", image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=600&fit=crop", description: "Versatile business jacket", aiRecommended: true },
-                { id: 3, name: "Business Casual Chinos", price: 54.99, category: "mens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/business-casual-chinos.jpg", description: "Versatile and comfortable for any setting", aiRecommended: true }
+                { id: 3, name: "Business Casual Chinos", price: 54.99, category: "mens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/business-casual-chinos.jpg", description: "Versatile and comfortable for any setting", aiRecommended: true },
+                { id: 18, name: "Leather Jacket", price: 299.99, category: "mens", image: "https://images.unsplash.com/photo-1520975954732-35dd22299614?w=400&h=600&fit=crop", description: "Classic leather jacket for a bold look", aiRecommended: false },
+                { id: 21, name: "Designer Dress Shirt", price: 89.99, category: "mens", image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=600&fit=crop", description: "Luxury dress shirt with French cuffs and spread collar", aiRecommended: false },
+                { id: 22, name: "Formal Dress Pants", price: 99.99, category: "mens", image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=600&fit=crop", description: "Professional dress pants with flat front design", aiRecommended: false },
+                { id: 23, name: "Casual Hoodie", price: 44.99, category: "mens", image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=600&fit=crop", description: "Comfortable pullover hoodie with front pocket", aiRecommended: false },
+                { id: 24, name: "Casual Shorts", price: 39.99, category: "mens", image: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=400&h=600&fit=crop", description: "Comfortable 9-inch inseam shorts for weekend activities", aiRecommended: false },
+                { id: 25, name: "Cotton Socks (3-Pack)", price: 24.99, category: "mens", image: "https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?w=400&h=600&fit=crop", description: "Comfortable crew socks with reinforced heel and toe", aiRecommended: false }
             ],
             womens: [
                 { id: 2, name: "Casual Dress", price: 79.99, category: "womens", image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=600&fit=crop", description: "Perfect for any occasion", aiRecommended: true },
@@ -1461,7 +1475,18 @@
                 { id: 6, name: "Floral Summer Dress", price: 49.99, category: "womens", image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=400&h=600&fit=crop", description: "Perfect for warm weather occasions", aiRecommended: false },
                 { id: 11, name: "Classic White Blouse", price: 44.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/casual-white-blouse.jpg", description: "Versatile professional top", aiRecommended: true },
                 { id: 12, name: "High-Waisted Jeans", price: 69.99, category: "womens", image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400&h=600&fit=crop", description: "Flattering skinny fit", aiRecommended: false },
-                { id: 13, name: "Casual Maxi Dress", price: 39.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/casual-maxi-dress.jpg", description: "Comfortable everyday wear", aiRecommended: true }
+                { id: 13, name: "Casual Maxi Dress", price: 39.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/casual-maxi-dress.jpg", description: "Comfortable everyday wear", aiRecommended: true },
+                { id: 19, name: "Denim Jacket", price: 59.99, category: "womens", image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5e?w=400&h=600&fit=crop", description: "Classic denim jacket with button closure", aiRecommended: false },
+                { id: 26, name: "Business Professional Dress", price: 89.99, category: "womens", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=600&fit=crop", description: "Sophisticated sheath dress ideal for professional settings", aiRecommended: false },
+                { id: 27, name: "Cocktail Party Dress", price: 124.99, category: "womens", image: "https://images.unsplash.com/photo-1566479179817-c0eea9e75c4d?w=400&h=600&fit=crop", description: "Elegant midi dress with wrap design", aiRecommended: false },
+                { id: 28, name: "Casual T-Shirt", price: 24.99, category: "womens", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=600&fit=crop", description: "Soft, comfortable t-shirt with relaxed fit", aiRecommended: false },
+                { id: 29, name: "Silk Camisole", price: 59.99, category: "womens", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=600&fit=crop", description: "Elegant camisole with adjustable straps", aiRecommended: false },
+                { id: 30, name: "Knit Cardigan", price: 69.99, category: "womens", image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=400&h=600&fit=crop", description: "Cozy open-front cardigan with front pockets", aiRecommended: false },
+                { id: 31, name: "Dress Pants", price: 54.99, category: "womens", image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=600&fit=crop", description: "Professional straight-leg pants with comfortable stretch", aiRecommended: false },
+                { id: 32, name: "A-Line Skirt", price: 39.99, category: "womens", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=600&fit=crop", description: "Classic knee-length A-line skirt", aiRecommended: false },
+                { id: 33, name: "Leggings", price: 29.99, category: "womens", image: "https://images.unsplash.com/photo-1506629905607-d3d64b7c8311?w=400&h=600&fit=crop", description: "High-performance leggings with four-way stretch", aiRecommended: false },
+                { id: 34, name: "Trench Coat", price: 149.99, category: "womens", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=600&fit=crop", description: "Classic double-breasted trench coat with belt", aiRecommended: false },
+                { id: 35, name: "Wool Blazer", price: 99.99, category: "womens", image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=600&fit=crop", description: "Tailored blazer with notched lapels", aiRecommended: false }
             ],
             accessories: [
                 { id: 14, name: "Leather Belt", price: 29.99, category: "accessories", image: "https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=400&h=400&fit=crop", description: "Classic leather with silver buckle", aiRecommended: false },
@@ -1933,15 +1958,22 @@
             const cartCount = document.getElementById('cartCount');
             const cartEmpty = document.getElementById('cartEmpty');
             const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const cartTotalAmount = document.getElementById('cartTotalAmount');
             
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
             cartCount.textContent = totalItems;
+            cartTotalAmount.textContent = `$${totalPrice.toFixed(2)}`;
             
             if (cart.length === 0) {
                 cartEmpty.style.display = 'block';
                 cartItems.innerHTML = '';
+                cartTotal.style.display = 'none';
             } else {
                 cartEmpty.style.display = 'none';
+                cartTotal.style.display = 'block';
                 cartItems.innerHTML = cart.map(item => `
                     <div class="cart-item">
                         <div class="cart-item-image">
@@ -2354,7 +2386,7 @@
                 
                 if (productMentions.length > 0) {
                     processedText += `<br><br><div style="background: rgba(37, 99, 235, 0.05); border: 1px solid rgba(37, 99, 235, 0.2); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
-                        <strong>🛒 Want me to add any of these to your cart?</strong><br>
+                        <strong>Want me to add any of these to your cart?</strong><br>
                         <div style="margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
                         ${productMentions.map(product => 
                             `<button onclick="addToCartFromChat(${product.id})" style="background: var(--accent-blue); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='var(--accent-blue)'">Add ${product.name}</button>`
