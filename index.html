@@ -169,8 +169,8 @@
         }
 
         .ai-badge::before {
-            content: '✨';
-            margin-right: 0.5rem;
+            content: '';
+            margin-right: 0;
         }
 
         .cta-button {
@@ -1488,7 +1488,7 @@
                 { id: 12, name: "High-Waisted Jeans", price: 69.99, category: "womens", image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400&h=600&fit=crop", description: "Flattering skinny fit", aiRecommended: false },
                 { id: 13, name: "Casual Maxi Dress", price: 39.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/casual-maxi-dress.jpg", description: "Comfortable everyday wear", aiRecommended: true },
                 { id: 19, name: "Denim Jacket", price: 59.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Denim-Jacket.jpg", description: "Classic denim jacket with button closure", aiRecommended: false },
-                { id: 26, name: "Business Professional Dress", price: 89.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Business-Professional-Dress.jpg", description: "Sophisticated sheath dress ideal for professional settings", aiRecommended: false },
+                { id: 26, name: "Business Professional Dress", price: 89.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/business-professional-dress.jpg", description: "Sophisticated sheath dress ideal for professional settings", aiRecommended: false },
                 { id: 27, name: "Cocktail Party Dress", price: 124.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Cocktail%20Party%20Dress.jpg", description: "Elegant midi dress with wrap design", aiRecommended: false },
                 { id: 28, name: "Casual T-Shirt", price: 24.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Casual%20TShirt.jpg", description: "Soft, comfortable t-shirt with relaxed fit", aiRecommended: false },
                 { id: 29, name: "Silk Camisole", price: 59.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Silk%20Camisole.jpg", description: "Elegant camisole with adjustable straps", aiRecommended: false },
@@ -2052,20 +2052,35 @@
             
             // AI logic for cart-based recommendations
             const allProducts = Object.values(products).flat();
+            
+            // Remove duplicates by ID first
+            const uniqueProducts = allProducts.filter((product, index, self) => 
+                self.findIndex(p => p.id === product.id) === index
+            );
+            
             const cartProductIds = cart.map(item => item.id);
             const cartCategories = cart.map(item => item.category);
             
-            // Find complementary products
-            const recommendations = allProducts.filter(product => {
+            // Find complementary products based on cart contents
+            const recommendations = uniqueProducts.filter(product => {
                 // Don't recommend items already in cart
                 if (cartProductIds.includes(product.id)) return false;
                 
-                // Recommend from different categories for outfit completion
+                // Smart recommendations based on cart contents
+                const hasWomensItems = cartCategories.includes('womens');
+                const hasMensItems = cartCategories.includes('mens');
+                const hasAccessories = cartCategories.includes('accessories');
+                
+                // Prioritize cross-category recommendations for outfit completion
+                if (hasWomensItems && !hasMensItems && product.category === 'accessories') return true;
+                if (hasMensItems && !hasWomensItems && product.category === 'accessories') return true;
+                if ((hasWomensItems || hasMensItems) && !hasAccessories && product.category === 'accessories') return true;
+                
+                // Also include AI-recommended items from different categories
                 const isDifferentCategory = !cartCategories.includes(product.category);
                 const isComplementary = product.aiRecommended;
-                const inBudgetRange = product.price <= 100; // Reasonable price for add-ons
                 
-                return (isDifferentCategory || isComplementary) && inBudgetRange;
+                return isDifferentCategory && isComplementary;
             }).slice(0, 4);
             
             if (recommendations.length > 0) {
