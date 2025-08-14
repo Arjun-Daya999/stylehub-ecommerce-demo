@@ -1172,7 +1172,7 @@
                 <li><a href="#mens" onclick="navigateToCategory('mens', event)">Men's</a></li>
                 <li><a href="#womens" onclick="navigateToCategory('womens', event)">Women's</a></li>
                 <li><a href="#accessories" onclick="navigateToCategory('accessories', event)">Accessories</a></li>
-                <li><a href="#sale" onclick="navigateToCategory('featured', event)">Sale</a></li>
+                <li><a href="#sale" onclick="navigateToCategory('sale', event)">Sale</a></li>
             </ul>
             <div class="nav-actions">
                 <input type="text" class="search-box" placeholder="Search for products...">
@@ -1390,7 +1390,7 @@
                     name: "Classic White Button-Up", 
                     price: 49.99, 
                     category: "mens", 
-                    image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&h=600&fit=crop", 
+                    image: "./Classic White Button Up.png", 
                     description: "Timeless professional shirt perfect for business meetings", 
                     badge: "Popular",
                     aiRecommended: true 
@@ -1447,8 +1447,10 @@
                 }
             ],
             mens: [
-                { id: 1, name: "Classic White Button-Up", price: 49.99, category: "mens", image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=600&fit=crop", description: "Timeless professional shirt perfect for business meetings", aiRecommended: true },
-                { id: 7, name: "Premium Oxford Shirt", price: 59.99, category: "mens", image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=600&fit=crop", description: "Sophisticated button-down for professionals", aiRecommended: true },
+                { id: 1, name: "Classic White Button-Up", price: 49.99, category: "mens", image: "./Classic White Button Up.png", description: "Timeless professional shirt perfect for business meetings", aiRecommended: true },
+                { id: 5, name: "Basic Cotton T-Shirt", price: 19.99, category: "mens", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=600&fit=crop", description: "Essential wardrobe staple in premium cotton", aiRecommended: false },
+                { id: 7, name: "Premium Oxford Shirt", price: 59.99, category: "mens", image: "./Oxford Button Down.png", description: "Sophisticated button-down for professionals", aiRecommended: true },
+                { id: 8, name: "Classic Dark Jeans", price: 79.99, category: "mens", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=600&fit=crop", description: "Premium denim with perfect stretch", aiRecommended: false },
                 { id: 9, name: "Casual Polo Shirt", price: 34.99, category: "mens", image: "https://images.unsplash.com/photo-1627225806124-bcf5d0df8d6d?w=400&h=600&fit=crop", description: "Comfortable everyday wear", aiRecommended: false },
                 { id: 10, name: "Classic Blazer", price: 149.99, category: "mens", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop", description: "Versatile business jacket", aiRecommended: true },
                 { id: 3, name: "Business Casual Chinos", price: 54.99, category: "mens", image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=400&h=600&fit=crop", description: "Versatile and comfortable for any setting", aiRecommended: true }
@@ -1524,7 +1526,8 @@
                 'featured': 'Featured Products',
                 'mens': "Men's Collection",
                 'womens': "Women's Collection",
-                'accessories': 'Accessories'
+                'accessories': 'Accessories',
+                'sale': 'Special Offers'
             };
             if (sectionTitle) {
                 sectionTitle.textContent = categoryTitles[category] || 'Products';
@@ -1557,6 +1560,24 @@
 
         function loadProducts(category) {
             const productsGrid = document.getElementById('productsGrid');
+            
+            // Special handling for sale category
+            if (category === 'sale') {
+                productsGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, var(--accent-blue), var(--success-green)); border-radius: 16px; color: white;">
+                        <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">🎉 Special Offer!</h2>
+                        <p style="font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.9;">Save on your entire purchase with our exclusive discount code</p>
+                        <div style="background: rgba(255,255,255,0.2); padding: 1.5rem; border-radius: 12px; display: inline-block; margin-bottom: 1rem;">
+                            <p style="font-size: 1rem; margin-bottom: 0.5rem;">At checkout, enter code:</p>
+                            <code style="font-size: 2rem; font-weight: 700; background: rgba(255,255,255,0.3); padding: 0.5rem 1rem; border-radius: 8px; letter-spacing: 2px;">AIROCKS</code>
+                        </div>
+                        <p style="font-size: 1.1rem; margin-top: 1rem;">Get <strong>10% OFF</strong> your entire order!</p>
+                        <p style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.8;">*Valid on all items. No minimum purchase required.</p>
+                    </div>
+                `;
+                return;
+            }
+            
             const categoryProducts = products[category] || [];
             
             productsGrid.innerHTML = categoryProducts.map(product => `
