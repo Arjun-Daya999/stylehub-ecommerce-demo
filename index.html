@@ -3,8 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StyleHub - Premium Fashion for Everyone</title>
+    <title>StyleHub - AI-Powered Fashion Discovery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-black: #000000;
+            --secondary-gray: #6b7280;
+            --light-gray: #f3f4f6;
+            --border-gray: #e5e7eb;
+            --accent-blue: #2563eb;
+            --success-green: #10b981;
+            --warning-orange: #f59e0b;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,294 +25,314 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #fff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.5;
+            color: #1a1a1a;
+            background: #ffffff;
+            font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Header with Glassmorphism */
+        /* Professional Header */
         .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-gray);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 70px;
+            height: 80px;
         }
 
         .logo {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary-black);
             text-decoration: none;
-            transition: all 0.3s ease;
+            letter-spacing: -0.02em;
+            transition: opacity 0.2s ease;
         }
 
         .logo:hover {
-            background: linear-gradient(135deg, #5a6fd8, #6a5acd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            transform: scale(1.05);
+            opacity: 0.7;
         }
 
         .nav-menu {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .nav-menu a {
             text-decoration: none;
-            color: #333;
+            color: var(--primary-black);
             font-weight: 500;
-            transition: color 0.3s;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+            letter-spacing: -0.01em;
         }
 
         .nav-menu a:hover {
-            color: #667eea;
+            color: var(--accent-blue);
         }
 
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .search-box {
-            padding: 0.5rem 1rem;
-            border: 1px solid #ddd;
-            border-radius: 25px;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
             outline: none;
+            font-size: 0.9rem;
+            width: 280px;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-blue);
         }
 
         .cart-icon {
-            background: #667eea;
+            background: var(--primary-black);
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease;
+            cursor: pointer;
         }
 
-        /* Remove demo notice styles */
+        .cart-icon:hover {
+            background: #374151;
+        }
 
-        /* Enhanced Hero with animated gradient */
+        /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            background-size: 200% 200%;
-            animation: gradientShift 8s ease infinite;
+            background: linear-gradient(135deg, #000000 0%, #374151 100%);
             color: white;
-            padding: 5rem 0;
+            padding: 6rem 0;
             text-align: center;
             position: relative;
-            overflow: hidden;
-            min-height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .hero .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
-            z-index: 2;
-            position: relative;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.15"/><circle cx="90" cy="40" r="0.8" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            pointer-events: none;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            padding: 0 24px;
         }
 
         .hero h1 {
             font-size: 4rem;
             margin-bottom: 1.5rem;
             font-weight: 800;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            animation: fadeInUp 1s ease;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
         }
 
         .hero p {
-            font-size: 1.4rem;
+            font-size: 1.25rem;
             margin-bottom: 2.5rem;
-            opacity: 0.95;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            animation: fadeInUp 1s ease 0.2s both;
+            color: #d1d5db;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            color: #60a5fa;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
         }
 
-        /* Enhanced CTA Button */
+        .ai-badge::before {
+            content: '🤖';
+            margin-right: 0.5rem;
+        }
+
         .cta-button {
-            background: rgba(255, 255, 255, 0.95);
-            color: #667eea;
-            padding: 1.2rem 3rem;
-            border-radius: 50px;
+            background: #ffffff;
+            color: var(--primary-black);
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: 700;
-            font-size: 1.2rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            animation: fadeInUp 1s ease 0.4s both;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            display: inline-block;
         }
 
         .cta-button:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.4);
-            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
         /* Category Navigation */
         .category-nav {
-            background: #f8f9fa;
+            background: #ffffff;
             padding: 2rem 0;
+            border-bottom: 1px solid var(--border-gray);
         }
 
         .category-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
 
         .category-tabs {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 0.5rem;
             margin-bottom: 2rem;
         }
 
-        /* Enhanced category tabs */
         .category-tab {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid rgba(102, 126, 234, 0.3);
-            color: #667eea;
-            padding: 1rem 2rem;
-            border-radius: 30px;
+            background: #ffffff;
+            border: 1px solid var(--border-gray);
+            color: var(--secondary-gray);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
         }
 
         .category-tab.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: var(--primary-black);
             color: white;
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            border-color: var(--primary-black);
         }
 
-        .category-tab:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.2);
+        .category-tab:hover:not(.active) {
+            border-color: var(--secondary-gray);
         }
 
-        /* Product Grid */
+        /* Products Section */
         .products-section {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 3rem 20px;
+            padding: 4rem 24px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
         }
 
         .section-title {
-            text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #2c3e50;
+            font-weight: 700;
+            color: var(--primary-black);
+            letter-spacing: -0.02em;
+        }
+
+        .ai-powered-badge {
+            background: var(--light-gray);
+            color: var(--secondary-gray);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
         }
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
         }
 
-        /* Enhanced Product Cards with better shadows and hover effects */
+        /* Enhanced Product Cards */
         .product-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
+            background: #ffffff;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid transparent;
         }
 
         .product-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 25px 60px rgba(102, 126, 234, 0.2);
-            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border-color: var(--border-gray);
         }
 
         .product-image {
             width: 100%;
-            height: 320px;
-            background: linear-gradient(135deg, #f8f9ff, #e8f0ff);
+            height: 400px;
+            background: var(--light-gray);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4.5rem;
             position: relative;
-            transition: all 0.3s ease;
+            overflow: hidden;
         }
 
-        .product-card:hover .product-image {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
         }
 
-        .product-card:hover .product-image {
-            transform: scale(1.1);
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-image .emoji-placeholder {
+            font-size: 4rem;
+            opacity: 0.6;
         }
 
         .product-badge {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #e74c3c;
+            top: 12px;
+            right: 12px;
+            background: var(--accent-blue);
             color: white;
             padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .ai-recommended-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--success-green);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
             font-weight: 600;
         }
 
@@ -308,131 +341,212 @@
         }
 
         .product-name {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
-            color: #2c3e50;
+            color: var(--primary-black);
+            letter-spacing: -0.01em;
         }
 
         .product-price {
-            color: #667eea;
-            font-size: 1.3rem;
+            color: var(--primary-black);
+            font-size: 1.25rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
 
         .product-description {
-            color: #666;
+            color: var(--secondary-gray);
             font-size: 0.9rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
         }
 
         .product-actions {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
 
-        /* Enhanced buttons with better gradients */
         .btn-add-cart {
             flex: 1;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: var(--primary-black);
             color: white;
             border: none;
-            padding: 0.9rem;
-            border-radius: 12px;
+            padding: 0.875rem;
+            border-radius: 8px;
             font-weight: 600;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.2s ease;
         }
 
         .btn-add-cart:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-            background: linear-gradient(135deg, #5a6fd8, #6a5acd);
+            background: #374151;
+            transform: translateY(-1px);
         }
 
         .btn-wishlist {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #e0e0e0;
-            padding: 0.9rem;
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid var(--border-gray);
+            padding: 0.875rem;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px);
+            transition: all 0.2s ease;
+            font-size: 1.1rem;
         }
 
         .btn-wishlist:hover {
-            border-color: #667eea;
-            color: #667eea;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+            border-color: var(--secondary-gray);
+            background: var(--light-gray);
         }
 
-        /* AI Assistant */
+        /* Skeleton Loading States */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-card {
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .skeleton-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        .skeleton-content {
+            padding: 1.5rem;
+        }
+
+        .skeleton-line {
+            height: 1rem;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+
+        .skeleton-line.short { width: 60%; }
+        .skeleton-line.medium { width: 80%; }
+
+        /* Recommendations Section */
+        .recommendations-section {
+            background: var(--light-gray);
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .recommendations-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .recommendations-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .recommendations-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-black);
+            margin-bottom: 0.5rem;
+        }
+
+        .recommendations-subtitle {
+            color: var(--secondary-gray);
+            font-size: 1.1rem;
+        }
+
+        /* AI Assistant Enhancements */
         .ai-assistant {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 24px;
+            right: 24px;
             z-index: 1000;
         }
 
         .chat-toggle {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            background-size: 200% 200%;
-            animation: gradientShift 8s ease infinite, pulseGlow 2s ease-in-out infinite alternate;
+            width: 64px;
+            height: 64px;
+            background: var(--primary-black);
             border-radius: 50%;
             border: none;
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
         .chat-toggle:hover {
-            transform: scale(1.15) rotate(10deg);
-            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
-            animation: gradientShift 4s ease infinite, pulseGlow 1s ease-in-out infinite alternate;
+            transform: scale(1.1);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
         }
 
-        @keyframes pulseGlow {
-            0% { 
-                box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
-            }
-            100% { 
-                box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6), 0 0 20px rgba(118, 75, 162, 0.4);
-            }
+        .chat-toggle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.3) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
         }
 
         .chat-panel {
             position: absolute;
             bottom: 80px;
             right: 0;
-            width: 400px;
-            height: 500px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+            width: 420px;
+            height: 600px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 20px 64px rgba(0, 0, 0, 0.2);
             display: none;
             flex-direction: column;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--border-gray);
+            overflow: hidden;
         }
 
         .chat-panel.active {
             display: flex;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .chat-header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: var(--primary-black);
             color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 20px 20px 0 0;
+            padding: 1.25rem 1.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -440,6 +554,28 @@
 
         .chat-title {
             font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .chat-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: #d1d5db;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .chat-close {
@@ -448,166 +584,407 @@
             color: white;
             font-size: 1.2rem;
             cursor: pointer;
+            padding: 0.25rem;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .chat-close:hover {
+            opacity: 1;
         }
 
         .chat-messages {
             flex: 1;
-            padding: 1rem;
+            padding: 1.5rem;
             overflow-y: auto;
-            background: #f8f9fa;
+            background: #ffffff;
         }
 
         .message {
-            margin-bottom: 1rem;
-            padding: 0.75rem 1rem;
-            border-radius: 15px;
+            margin-bottom: 1.25rem;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
             max-width: 85%;
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
 
         .message.bot {
-            background: white;
+            background: var(--light-gray);
             margin-right: auto;
-            border: 1px solid #e0e0e0;
+            border: 1px solid var(--border-gray);
         }
 
         .message.user {
-            background: #667eea;
+            background: var(--primary-black);
             color: white;
             margin-left: auto;
             text-align: right;
         }
 
         .message.loading {
-            background: white;
+            background: var(--light-gray);
             margin-right: auto;
-            border: 1px solid #e0e0e0;
+            border: 1px solid var(--border-gray);
+            color: var(--secondary-gray);
             font-style: italic;
-            color: #666;
+        }
+
+        /* Enhanced Loading States */
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .loading-stage {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid var(--border-gray);
+        }
+
+        .loading-stage.active {
+            border-color: var(--accent-blue);
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .loading-stage.completed {
+            border-color: var(--success-green);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .stage-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
+        .stage-icon.pending {
+            background: var(--border-gray);
+            color: var(--secondary-gray);
+        }
+
+        .stage-icon.active {
+            background: var(--accent-blue);
+            color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        .stage-icon.completed {
+            background: var(--success-green);
+            color: white;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .stage-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .loading-progress {
+            width: 100%;
+            height: 4px;
+            background: var(--border-gray);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 0.75rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--success-green));
+            border-radius: 2px;
+            transition: width 0.5s ease;
         }
 
         .chat-input-area {
-            padding: 1rem;
-            border-top: 1px solid #e0e0e0;
-            background: white;
-            border-radius: 0 0 20px 20px;
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-gray);
+            background: #ffffff;
+        }
+
+        .demo-scenarios {
+            margin-bottom: 1rem;
+        }
+
+        .demo-scenarios-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--secondary-gray);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .demo-button {
+            background: var(--light-gray);
+            border: 1px solid var(--border-gray);
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            color: var(--secondary-gray);
+        }
+
+        .demo-button:hover {
+            background: var(--border-gray);
+            color: var(--primary-black);
         }
 
         .chat-input-container {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
 
         .chat-input {
             flex: 1;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 20px;
+            padding: 0.875rem;
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
             outline: none;
+            font-size: 0.9rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .chat-input:focus {
+            border-color: var(--accent-blue);
         }
 
         .chat-send {
-            background: #667eea;
+            background: var(--primary-black);
             color: white;
             border: none;
-            padding: 0.75rem 1rem;
-            border-radius: 20px;
+            padding: 0.875rem 1.25rem;
+            border-radius: 8px;
             cursor: pointer;
-        }
-
-        /* Quick Questions */
-        .quick-questions {
-            padding: 0.5rem 1rem 1rem;
-            background: white;
-        }
-
-        .quick-question {
-            background: #f0f2f5;
-            border: none;
-            padding: 0.5rem 1rem;
-            margin: 0.25rem;
-            border-radius: 15px;
-            cursor: pointer;
+            font-weight: 600;
             font-size: 0.9rem;
-            transition: background 0.3s;
+            transition: all 0.2s ease;
         }
 
-        /* Loading dots animation */
-        .loading-dots {
-            display: inline-block;
+        .chat-send:hover:not(:disabled) {
+            background: #374151;
         }
 
-        .loading-dots::after {
-            content: '';
-            animation: dots 1.5s infinite;
+        .chat-send:disabled {
+            background: var(--secondary-gray);
+            cursor: not-allowed;
         }
 
-        @keyframes dots {
-            0%, 20% { content: ''; }
-            40% { content: '.'; }
-            60% { content: '..'; }
-            80%, 100% { content: '...'; }
+        /* Cart Drawer */
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -480px;
+            width: 480px;
+            height: 100vh;
+            background: #ffffff;
+            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+            z-index: 1001;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Footer */
-        .footer {
-            background: #2c3e50;
-            color: white;
-            padding: 3rem 0 2rem;
-            margin-top: 4rem;
+        .cart-drawer.active {
+            right: 0;
         }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
         }
 
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: #ecf0f1;
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
-        .footer-section a {
-            color: #bdc3c7;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s;
+        .cart-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .footer-section a:hover {
-            color: #667eea;
+        .cart-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-black);
         }
 
-        .footer-bottom {
+        .cart-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--secondary-gray);
+        }
+
+        .cart-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .cart-empty {
             text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #34495e;
-            color: #bdc3c7;
+            padding: 3rem 1.5rem;
+            color: var(--secondary-gray);
         }
 
-        /* Notification System for WOW Factor */
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            background: var(--light-gray);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            color: var(--primary-black);
+            margin-bottom: 0.25rem;
+        }
+
+        .cart-item-price {
+            color: var(--secondary-gray);
+            font-size: 0.9rem;
+        }
+
+        .cart-recommendations {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-gray);
+        }
+
+        .cart-rec-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-black);
+            margin-bottom: 1rem;
+        }
+
+        .cart-rec-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .cart-rec-item {
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .cart-rec-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .cart-rec-image {
+            width: 100%;
+            height: 120px;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .cart-rec-info {
+            padding: 0.75rem;
+        }
+
+        .cart-rec-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-black);
+            margin-bottom: 0.25rem;
+        }
+
+        .cart-rec-price {
+            font-size: 0.8rem;
+            color: var(--secondary-gray);
+        }
+
+        /* Notification System */
         .notification {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            top: 24px;
+            right: 24px;
+            background: var(--primary-black);
             color: white;
             padding: 1rem 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             z-index: 10000;
             transform: translateX(400px);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 360px;
         }
 
         .notification.show {
             transform: translateX(0);
+        }
+
+        .notification.success {
+            background: var(--success-green);
+        }
+
+        .notification.warning {
+            background: var(--warning-orange);
         }
 
         .notification .close-btn {
@@ -618,9 +995,59 @@
             font-size: 1.2rem;
             cursor: pointer;
             margin-left: 10px;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
         }
 
-        /* Responsive */
+        .notification .close-btn:hover {
+            opacity: 1;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-black);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 6rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .footer-section a {
+            color: #9ca3af;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.75rem;
+            transition: color 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-section a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #374151;
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .nav-menu {
                 display: none;
@@ -632,28 +1059,43 @@
             
             .category-tabs {
                 flex-wrap: wrap;
-                gap: 1rem;
+                gap: 0.75rem;
             }
             
             .chat-panel {
-                width: 350px;
-                height: 450px;
+                width: 100vw;
+                height: 100vh;
+                bottom: 0;
+                right: 0;
+                border-radius: 0;
             }
             
             .products-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
             }
 
-            .notification {
-                right: 10px;
-                left: 10px;
-                transform: translateY(-100px);
-                width: auto;
+            .search-box {
+                width: 200px;
             }
 
-            .notification.show {
-                transform: translateY(0);
+            .cart-drawer {
+                width: 100vw;
+                right: -100vw;
             }
+        }
+
+        /* Product highlight animation */
+        .product-highlight {
+            animation: highlight 0.6s ease;
+            border: 2px solid var(--accent-blue) !important;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2) !important;
+        }
+
+        @keyframes highlight {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
@@ -669,20 +1111,19 @@
                 <li><a href="#sale" onclick="navigateToCategory('featured', event)">Sale</a></li>
             </ul>
             <div class="nav-actions">
-                <input type="text" class="search-box" placeholder="Search products...">
-                <a href="#" class="cart-icon">🛒 Cart (0)</a>
+                <input type="text" class="search-box" placeholder="Search for products...">
+                <a href="#" class="cart-icon" onclick="toggleCart()" id="cartIcon">🛒 Cart (<span id="cartCount">0</span>)</a>
             </div>
         </nav>
     </header>
 
-
-
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Premium Fashion for Everyone</h1>
-            <p>Discover our curated collection of stylish clothing and accessories, now with AI-powered shopping assistance</p>
-            <a href="#products" class="cta-button">Shop Now</a>
+            <div class="ai-badge">AI-Powered Fashion Discovery</div>
+            <h1>Find Your Perfect Style</h1>
+            <p>Experience the future of shopping with our AI assistant that understands your unique style and preferences</p>
+            <a href="#products" class="cta-button">Discover Your Style</a>
         </div>
     </section>
 
@@ -700,9 +1141,25 @@
 
     <!-- Products Section -->
     <section class="products-section" id="products">
-        <h2 class="section-title">Featured Products</h2>
+        <div class="section-header">
+            <h2 class="section-title">Featured Products</h2>
+            <div class="ai-powered-badge">🤖 AI-Curated</div>
+        </div>
         <div class="products-grid" id="productsGrid">
             <!-- Products will be dynamically loaded here -->
+        </div>
+    </section>
+
+    <!-- Recommendations Section -->
+    <section class="recommendations-section" id="recommendationsSection" style="display: none;">
+        <div class="recommendations-container">
+            <div class="recommendations-header">
+                <h2 class="recommendations-title">Recommended for You</h2>
+                <p class="recommendations-subtitle">Based on your style preferences and shopping history</p>
+            </div>
+            <div class="products-grid" id="recommendationsGrid">
+                <!-- AI recommendations will be loaded here -->
+            </div>
         </div>
     </section>
 
@@ -711,24 +1168,56 @@
         <button class="chat-toggle" onclick="toggleChat()">🤖</button>
         <div class="chat-panel" id="chatPanel">
             <div class="chat-header">
-                <span class="chat-title">👋 StyleHub AI Assistant</span>
+                <div>
+                    <div class="chat-title">StyleHub AI Assistant</div>
+                    <div class="chat-status">
+                        <div class="status-indicator"></div>
+                        AI Ready
+                    </div>
+                </div>
                 <button class="chat-close" onclick="toggleChat()">✕</button>
             </div>
             <div class="chat-messages" id="chatMessages">
                 <div class="message bot">
-                    Hi! I'm your StyleHub shopping assistant! I can help you find products, check prices, sizes, and answer questions about our policies. What can I help you find today?
+                    👋 Hi there! I'm your personal StyleHub AI assistant. I can help you discover amazing products, check our policies, and provide personalized recommendations based on your style. What are you looking for today?
                 </div>
-            </div>
-            <div class="quick-questions">
-                <button class="quick-question" onclick="askQuestion('What is your cheapest men\'s shirt?')">What's your cheapest men's shirt?</button>
-                <button class="quick-question" onclick="askQuestion('Do you have any dresses under $50?')">Any dresses under $50?</button>
-                <button class="quick-question" onclick="askQuestion('What is your return policy?')">What's your return policy?</button>
             </div>
             <div class="chat-input-area">
+                <div class="demo-scenarios">
+                    <div class="demo-scenarios-title">Try These Scenarios</div>
+                    <div class="demo-buttons">
+                        <button class="demo-button" onclick="askDemoQuestion('I need a professional outfit for work meetings')">Professional Look</button>
+                        <button class="demo-button" onclick="askDemoQuestion('Show me something casual but stylish for weekends')">Weekend Style</button>
+                        <button class="demo-button" onclick="askDemoQuestion('What would go well with a classic white button-up?')">Style Advice</button>
+                        <button class="demo-button" onclick="askDemoQuestion('Do you have any recommendations for me?')">Personalized Recs</button>
+                    </div>
+                </div>
                 <div class="chat-input-container">
-                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask about products, sizes, policies..." onkeypress="handleKeyPress(event)">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask about products, styling, or recommendations..." onkeypress="handleKeyPress(event)">
                     <button class="chat-send" onclick="sendMessage()">Send</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h2 class="cart-title">Your Cart</h2>
+            <button class="cart-close" onclick="toggleCart()">✕</button>
+        </div>
+        <div class="cart-content" id="cartContent">
+            <div class="cart-empty" id="cartEmpty">
+                <p>Your cart is empty</p>
+                <p style="font-size: 0.9rem; color: var(--secondary-gray); margin-top: 0.5rem;">Add some items to see our AI recommendations!</p>
+            </div>
+            <div id="cartItems"></div>
+        </div>
+        <div class="cart-recommendations" id="cartRecommendations" style="display: none;">
+            <h3 class="cart-rec-title">🤖 Complete Your Look</h3>
+            <div class="cart-rec-grid" id="cartRecGrid">
+                <!-- AI recommendations based on cart items -->
             </div>
         </div>
     </div>
@@ -746,7 +1235,7 @@
             <div class="footer-section">
                 <h3>Company</h3>
                 <a href="#">About StyleHub</a>
-                <a href="#">Careers</a>
+                <a href="#">AI Technology</a>
                 <a href="#">Sustainability</a>
                 <a href="#">Privacy Policy</a>
             </div>
@@ -757,70 +1246,171 @@
                 <a href="#">Twitter</a>
                 <a href="#">Newsletter</a>
             </div>
+            <div class="footer-section">
+                <h3>AI-Powered Features</h3>
+                <a href="#">Personal Styling</a>
+                <a href="#">Smart Recommendations</a>
+                <a href="#">Style Matching</a>
+                <a href="#">Trend Insights</a>
+            </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 StyleHub. All rights reserved. | AI-Powered Shopping Experience</p>
+            <p>&copy; 2025 StyleHub. All rights reserved. | Powered by Advanced AI Technology</p>
         </div>
     </footer>
 
     <script>
-        // Configuration - Updated with your correct ngrok URL for public access
-        // Set to true for local testing, false for demo with ngrok
+        // Configuration
         const USE_LOCAL_URL = false;
         const LOCAL_WEBHOOK_URL = 'http://localhost:5678/webhook-test/204ffc19-8edc-4630-a7dc-bd62d9143ef7';
         const PUBLIC_WEBHOOK_URL = 'https://c013f0b2fde7.ngrok-free.app/webhook-test/204ffc19-8edc-4630-a7dc-bd62d9143ef7';
-        
         const WEBHOOK_URL = USE_LOCAL_URL ? LOCAL_WEBHOOK_URL : PUBLIC_WEBHOOK_URL;
 
-        // Product Data
+        // Demo user profile for AI recommendations
+        const demoUser = {
+            id: 'demo_user',
+            name: 'Alex Chen',
+            style_preferences: ['professional', 'modern', 'minimalist'],
+            sizes: { tops: 'M', bottoms: '32', shoes: '10' },
+            recent_purchases: [
+                { id: 1, name: "Classic White Button-Up", category: "mens", price: 49.99 },
+                { id: 8, name: "Classic Dark Jeans", category: "mens", price: 79.99 },
+                { id: 15, name: "Silk Scarf", category: "accessories", price: 34.99 }
+            ],
+            favorite_colors: ['black', 'white', 'navy', 'gray'],
+            budget_range: [30, 150]
+        };
+
+        // Enhanced product data with real images
         const products = {
             featured: [
-                { id: 1, name: "Classic White Button-Up", price: 49.99, category: "mens", image: "👔", description: "Timeless professional shirt", badge: "Popular" },
-                { id: 2, name: "Little Black Dress", price: 79.99, category: "womens", image: "👗", description: "Perfect for any occasion", badge: "Bestseller" },
-                { id: 3, name: "Business Casual Chinos", price: 54.99, category: "mens", image: "👖", description: "Versatile and comfortable", badge: "" },
-                { id: 4, name: "Cashmere Sweater", price: 119.99, category: "womens", image: "🧥", description: "Luxuriously soft", badge: "Premium" },
-                { id: 5, name: "Basic Cotton T-Shirt", price: 19.99, category: "mens", image: "👕", description: "Essential wardrobe staple", badge: "Great Value" },
-                { id: 6, name: "Floral Summer Dress", price: 49.99, category: "womens", image: "🌺", description: "Perfect for warm weather", badge: "" }
+                { 
+                    id: 1, 
+                    name: "Classic White Button-Up", 
+                    price: 49.99, 
+                    category: "mens", 
+                    image: "Classic White Button-Up.png", 
+                    description: "Timeless professional shirt perfect for business meetings", 
+                    badge: "Popular",
+                    aiRecommended: true 
+                },
+                { 
+                    id: 5, 
+                    name: "Basic Cotton T-Shirt", 
+                    price: 19.99, 
+                    category: "mens", 
+                    image: "Basic Cotton T-Shirt.png", 
+                    description: "Essential wardrobe staple in premium cotton", 
+                    badge: "Great Value",
+                    aiRecommended: false 
+                },
+                { 
+                    id: 2, 
+                    name: "Little Black Dress", 
+                    price: 79.99, 
+                    category: "womens", 
+                    image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=600&fit=crop", 
+                    description: "Perfect for any occasion", 
+                    badge: "Bestseller",
+                    aiRecommended: true 
+                },
+                { 
+                    id: 4, 
+                    name: "Cashmere Sweater", 
+                    price: 119.99, 
+                    category: "womens", 
+                    image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=400&h=600&fit=crop", 
+                    description: "Luxuriously soft premium cashmere", 
+                    badge: "Premium",
+                    aiRecommended: false 
+                },
+                { 
+                    id: 3, 
+                    name: "Business Casual Chinos", 
+                    price: 54.99, 
+                    category: "mens", 
+                    image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=400&h=600&fit=crop", 
+                    description: "Versatile and comfortable for any setting", 
+                    badge: "",
+                    aiRecommended: true 
+                },
+                { 
+                    id: 6, 
+                    name: "Floral Summer Dress", 
+                    price: 49.99, 
+                    category: "womens", 
+                    image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=400&h=600&fit=crop", 
+                    description: "Perfect for warm weather occasions", 
+                    badge: "",
+                    aiRecommended: false 
+                }
             ],
             mens: [
-                { id: 1, name: "Classic White Button-Up", price: 49.99, category: "mens", image: "👔", description: "Timeless professional shirt" },
-                { id: 5, name: "Basic Cotton T-Shirt", price: 19.99, category: "mens", image: "👕", description: "Essential wardrobe staple" },
-                { id: 7, name: "Premium Oxford Shirt", price: 59.99, category: "mens", image: "👔", description: "Sophisticated button-down" },
-                { id: 8, name: "Classic Dark Jeans", price: 79.99, category: "mens", image: "👖", description: "Premium denim with stretch" },
-                { id: 9, name: "Casual Polo Shirt", price: 34.99, category: "mens", image: "👕", description: "Comfortable everyday wear" },
-                { id: 10, name: "Classic Blazer", price: 149.99, category: "mens", image: "🧥", description: "Versatile business jacket" }
+                { id: 1, name: "Classic White Button-Up", price: 49.99, category: "mens", image: "Classic White Button-Up.png", description: "Timeless professional shirt perfect for business meetings", aiRecommended: true },
+                { id: 5, name: "Basic Cotton T-Shirt", price: 19.99, category: "mens", image: "Basic Cotton T-Shirt.png", description: "Essential wardrobe staple in premium cotton", aiRecommended: false },
+                { id: 7, name: "Premium Oxford Shirt", price: 59.99, category: "mens", image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=600&fit=crop", description: "Sophisticated button-down for professionals", aiRecommended: true },
+                { id: 8, name: "Classic Dark Jeans", price: 79.99, category: "mens", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=600&fit=crop", description: "Premium denim with perfect stretch", aiRecommended: false },
+                { id: 9, name: "Casual Polo Shirt", price: 34.99, category: "mens", image: "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=400&h=600&fit=crop", description: "Comfortable everyday wear", aiRecommended: false },
+                { id: 10, name: "Classic Blazer", price: 149.99, category: "mens", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop", description: "Versatile business jacket", aiRecommended: true }
             ],
             womens: [
-                { id: 2, name: "Little Black Dress", price: 79.99, category: "womens", image: "👗", description: "Perfect for any occasion" },
-                { id: 4, name: "Cashmere Sweater", price: 119.99, category: "womens", image: "🧥", description: "Luxuriously soft" },
-                { id: 6, name: "Floral Summer Dress", price: 49.99, category: "womens", image: "🌺", description: "Perfect for warm weather" },
-                { id: 11, name: "Classic White Blouse", price: 44.99, category: "womens", image: "👔", description: "Versatile professional top" },
-                { id: 12, name: "High-Waisted Jeans", price: 69.99, category: "womens", image: "👖", description: "Flattering skinny fit" },
-                { id: 13, name: "Casual Maxi Dress", price: 39.99, category: "womens", image: "👗", description: "Comfortable everyday wear" }
+                { id: 2, name: "Little Black Dress", price: 79.99, category: "womens", image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=600&fit=crop", description: "Perfect for any occasion", aiRecommended: true },
+                { id: 4, name: "Cashmere Sweater", price: 119.99, category: "womens", image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=400&h=600&fit=crop", description: "Luxuriously soft premium cashmere", aiRecommended: false },
+                { id: 6, name: "Floral Summer Dress", price: 49.99, category: "womens", image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=400&h=600&fit=crop", description: "Perfect for warm weather occasions", aiRecommended: false },
+                { id: 11, name: "Classic White Blouse", price: 44.99, category: "womens", image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=600&fit=crop", description: "Versatile professional top", aiRecommended: true },
+                { id: 12, name: "High-Waisted Jeans", price: 69.99, category: "womens", image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400&h=600&fit=crop", description: "Flattering skinny fit", aiRecommended: false },
+                { id: 13, name: "Casual Maxi Dress", price: 39.99, category: "womens", image: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=400&h=600&fit=crop", description: "Comfortable everyday wear", aiRecommended: true }
             ],
             accessories: [
-                { id: 14, name: "Leather Belt", price: 29.99, category: "accessories", image: "🔗", description: "Classic leather with silver buckle" },
-                { id: 15, name: "Silk Scarf", price: 34.99, category: "accessories", image: "🧣", description: "Elegant square scarf" },
-                { id: 16, name: "Leather Handbag", price: 89.99, category: "accessories", image: "👜", description: "Structured bag with strap" },
-                { id: 17, name: "Statement Necklace", price: 19.99, category: "accessories", image: "📿", description: "Bold gold-plated necklace" }
+                { id: 14, name: "Leather Belt", price: 29.99, category: "accessories", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop", description: "Classic leather with silver buckle", aiRecommended: false },
+                { id: 15, name: "Silk Scarf", price: 34.99, category: "accessories", image: "https://images.unsplash.com/photo-1600096194734-ec4d0c5d8b91?w=400&h=400&fit=crop", description: "Elegant square scarf", aiRecommended: true },
+                { id: 16, name: "Leather Handbag", price: 89.99, category: "accessories", image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=400&fit=crop", description: "Structured bag with strap", aiRecommended: true },
+                { id: 17, name: "Statement Necklace", price: 19.99, category: "accessories", image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop", description: "Bold gold-plated necklace", aiRecommended: false }
             ]
         };
 
-        // Load products
+        // Cart management
+        let cart = [];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load demo user data from localStorage or set default
+            const savedUser = localStorage.getItem('demoUser');
+            if (savedUser) {
+                Object.assign(demoUser, JSON.parse(savedUser));
+            } else {
+                localStorage.setItem('demoUser', JSON.stringify(demoUser));
+            }
+
+            // Load cart from localStorage
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartUI();
+            }
+
+            // Load featured products
+            setTimeout(() => {
+                const featuredTab = document.querySelector('.category-tab[onclick*="featured"]');
+                showCategory('featured', featuredTab);
+                loadRecommendations();
+            }, 100);
+        });
+
+        // Enhanced category display with skeletons
         function showCategory(category, targetElement = null) {
-            // Update active tab - handle both click events and direct calls
+            // Update active tab
             document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
             if (targetElement) {
                 targetElement.classList.add('active');
             } else {
-                // Find the right tab to activate based on category
                 const tabToActivate = document.querySelector(`.category-tab[onclick*="${category}"]`);
                 if (tabToActivate) {
                     tabToActivate.classList.add('active');
                 }
             }
 
-            // Update section title dynamically
+            // Update section title
             const sectionTitle = document.querySelector('.section-title');
             const categoryTitles = {
                 'featured': 'Featured Products',
@@ -832,15 +1422,46 @@
                 sectionTitle.textContent = categoryTitles[category] || 'Products';
             }
 
-            // Load products for category
+            // Show skeleton loaders first
+            showSkeletonLoaders();
+
+            // Simulate loading delay for demonstration
+            setTimeout(() => {
+                loadProducts(category);
+            }, 800);
+        }
+
+        function showSkeletonLoaders() {
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = Array(6).fill(0).map(() => `
+                <div class="skeleton-card">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton-line medium"></div>
+                        <div class="skeleton-line short"></div>
+                        <div class="skeleton-line"></div>
+                        <div style="height: 1rem;"></div>
+                        <div class="skeleton-line short"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadProducts(category) {
             const productsGrid = document.getElementById('productsGrid');
             const categoryProducts = products[category] || [];
             
             productsGrid.innerHTML = categoryProducts.map(product => `
-                <div class="product-card" onclick="viewProduct(${product.id})">
+                <div class="product-card" onclick="viewProduct(${product.id})" data-product-id="${product.id}">
                     <div class="product-image">
-                        ${product.image}
+                        ${product.image.includes('.png') ? 
+                            `<img src="${product.image}" alt="${product.name}" loading="lazy">` :
+                            product.image.includes('http') ? 
+                            `<img src="${product.image}" alt="${product.name}" loading="lazy">` :
+                            `<div class="emoji-placeholder">${product.image}</div>`
+                        }
                         ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                        ${product.aiRecommended ? `<div class="ai-recommended-badge">AI Pick</div>` : ''}
                     </div>
                     <div class="product-info">
                         <div class="product-name">${product.name}</div>
@@ -858,52 +1479,205 @@
             document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
         }
 
+        function loadRecommendations() {
+            const recommendationsSection = document.getElementById('recommendationsSection');
+            const recommendationsGrid = document.getElementById('recommendationsGrid');
+            
+            // Get AI recommendations based on user profile
+            const allProducts = Object.values(products).flat();
+            const recommendedProducts = allProducts.filter(product => {
+                // AI logic: recommend based on user preferences, recent purchases, and style
+                const matchesStyle = demoUser.style_preferences.some(style => 
+                    product.description.toLowerCase().includes(style) ||
+                    product.name.toLowerCase().includes(style)
+                );
+                const inBudget = product.price >= demoUser.budget_range[0] && product.price <= demoUser.budget_range[1];
+                const notRecentlyBought = !demoUser.recent_purchases.some(purchase => purchase.id === product.id);
+                
+                return (matchesStyle || product.aiRecommended) && inBudget && notRecentlyBought;
+            }).slice(0, 4);
+
+            if (recommendedProducts.length > 0) {
+                recommendationsGrid.innerHTML = recommendedProducts.map(product => `
+                    <div class="product-card" onclick="viewProduct(${product.id})" data-product-id="${product.id}">
+                        <div class="product-image">
+                            ${product.image.includes('.png') ? 
+                                `<img src="${product.image}" alt="${product.name}" loading="lazy">` :
+                                product.image.includes('http') ? 
+                                `<img src="${product.image}" alt="${product.name}" loading="lazy">` :
+                                `<div class="emoji-placeholder">${product.image}</div>`
+                            }
+                            <div class="ai-recommended-badge">AI Recommended</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-price">$${product.price}</div>
+                            <div class="product-description">${product.description}</div>
+                            <div class="product-actions">
+                                <button class="btn-add-cart" onclick="addToCart(${product.id}, event)">Add to Cart</button>
+                                <button class="btn-wishlist" onclick="addToWishlist(${product.id}, event)">♡</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                recommendationsSection.style.display = 'block';
+            }
+        }
+
         // Navigation function for header links
         function navigateToCategory(category, event) {
             event.preventDefault();
             showCategory(category);
         }
 
-        // Initialize with featured products - Enhanced to ensure loading
-        document.addEventListener('DOMContentLoaded', () => {
-            // Force show featured products immediately
-            setTimeout(() => {
-                // Find the featured tab and activate it properly
-                const featuredTab = document.querySelector('.category-tab[onclick*="featured"]');
-                showCategory('featured', featuredTab);
-            }, 100);
-        });
-
         // Product interactions
         function viewProduct(id) {
-            // In a real app, this would navigate to product detail page
             const product = Object.values(products).flat().find(p => p.id === id);
             if (product) {
-                askQuestion(`Tell me more about the ${product.name}`);
-                toggleChat();
+                askDemoQuestion(`Tell me more about the ${product.name}`);
+                if (!document.getElementById('chatPanel').classList.contains('active')) {
+                    toggleChat();
+                }
             }
         }
 
         function addToCart(id, event) {
             event.stopPropagation();
-            // Simulate add to cart
-            alert('🛒 Product added to cart! (Demo mode - not functional)');
+            const product = Object.values(products).flat().find(p => p.id === id);
+            if (product) {
+                // Check if item already in cart
+                const existingItem = cart.find(item => item.id === id);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({ ...product, quantity: 1 });
+                }
+                
+                updateCartUI();
+                saveCart();
+                updateCartRecommendations();
+                showNotification(`✅ ${product.name} added to cart!`, 'success');
+            }
         }
 
         function addToWishlist(id, event) {
             event.stopPropagation();
-            // Simulate add to wishlist
-            event.target.innerHTML = '♥';
-            event.target.style.color = '#e74c3c';
+            const product = Object.values(products).flat().find(p => p.id === id);
+            if (product) {
+                event.target.innerHTML = '♥';
+                event.target.style.color = '#ef4444';
+                showNotification(`💖 ${product.name} added to wishlist!`, 'success');
+            }
         }
 
-        // Chat functionality
+        // Cart management
+        function toggleCart() {
+            const cartDrawer = document.getElementById('cartDrawer');
+            const cartOverlay = document.getElementById('cartOverlay');
+            
+            cartDrawer.classList.toggle('active');
+            cartOverlay.classList.toggle('active');
+            
+            if (cartDrawer.classList.contains('active')) {
+                updateCartRecommendations();
+            }
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            const cartEmpty = document.getElementById('cartEmpty');
+            const cartItems = document.getElementById('cartItems');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            if (cart.length === 0) {
+                cartEmpty.style.display = 'block';
+                cartItems.innerHTML = '';
+            } else {
+                cartEmpty.style.display = 'none';
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-image">
+                            ${item.image.includes('.png') ? 
+                                `<img src="${item.image}" alt="${item.name}">` :
+                                item.image.includes('http') ? 
+                                `<img src="${item.image}" alt="${item.name}">` :
+                                `<div style="font-size: 2rem;">${item.image}</div>`
+                            }
+                        </div>
+                        <div class="cart-item-details">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">$${item.price} × ${item.quantity}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function updateCartRecommendations() {
+            const cartRecommendations = document.getElementById('cartRecommendations');
+            const cartRecGrid = document.getElementById('cartRecGrid');
+            
+            if (cart.length === 0) {
+                cartRecommendations.style.display = 'none';
+                return;
+            }
+            
+            // AI logic for cart-based recommendations
+            const allProducts = Object.values(products).flat();
+            const cartProductIds = cart.map(item => item.id);
+            const cartCategories = cart.map(item => item.category);
+            
+            // Find complementary products
+            const recommendations = allProducts.filter(product => {
+                // Don't recommend items already in cart
+                if (cartProductIds.includes(product.id)) return false;
+                
+                // Recommend from different categories for outfit completion
+                const isDifferentCategory = !cartCategories.includes(product.category);
+                const isComplementary = product.aiRecommended;
+                const inBudgetRange = product.price <= 100; // Reasonable price for add-ons
+                
+                return (isDifferentCategory || isComplementary) && inBudgetRange;
+            }).slice(0, 4);
+            
+            if (recommendations.length > 0) {
+                cartRecGrid.innerHTML = recommendations.map(product => `
+                    <div class="cart-rec-item" onclick="addToCart(${product.id}, event)">
+                        <div class="cart-rec-image">
+                            ${product.image.includes('.png') ? 
+                                `<img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">` :
+                                product.image.includes('http') ? 
+                                `<img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">` :
+                                `${product.image}`
+                            }
+                        </div>
+                        <div class="cart-rec-info">
+                            <div class="cart-rec-name">${product.name}</div>
+                            <div class="cart-rec-price">$${product.price}</div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                cartRecommendations.style.display = 'block';
+            } else {
+                cartRecommendations.style.display = 'none';
+            }
+        }
+
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Enhanced chat functionality with staged loading
         function toggleChat() {
             const chatPanel = document.getElementById('chatPanel');
             chatPanel.classList.toggle('active');
         }
 
-        function askQuestion(question) {
+        function askDemoQuestion(question) {
             const chatInput = document.getElementById('chatInput');
             chatInput.value = question;
             sendMessage();
@@ -915,6 +1689,15 @@
             }
         }
 
+        // Enhanced loading stages
+        const loadingStages = [
+            { text: "Understanding your style preferences...", icon: "🧠", duration: 1000 },
+            { text: "Curating personalized selections...", icon: "✨", duration: 1200 },
+            { text: "Finding your perfect match...", icon: "🎯", duration: 1000 },
+            { text: "Styling recommendations just for you...", icon: "👗", duration: 800 },
+            { text: "Putting together your look...", icon: "🎨", duration: 600 }
+        ];
+
         async function sendMessage() {
             const input = document.getElementById('chatInput');
             const button = document.querySelector('.chat-send');
@@ -925,18 +1708,18 @@
             // Disable input and button
             input.disabled = true;
             button.disabled = true;
-            button.textContent = 'Thinking...';
+            button.textContent = 'Processing...';
             
             // Add user message
             addMessage(question, 'user');
             
-            // Add loading message
-            const loadingId = addMessage('Analyzing our product catalog and policies<span class="loading-dots"></span>', 'loading');
+            // Show enhanced loading with stages
+            const loadingId = await showStagedLoading();
             
             // Clear input
             input.value = '';
             
-            // Try webhook URLs in order of preference
+            // Try webhook URLs
             const webhookUrls = [
                 WEBHOOK_URL,
                 WEBHOOK_URL.replace('/webhook-test/', '/webhook/'),
@@ -956,7 +1739,12 @@
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ question: question }),
+                        body: JSON.stringify({ 
+                            question: question,
+                            userProfile: demoUser,
+                            cart: cart,
+                            currentCategory: getCurrentCategory()
+                        }),
                         mode: 'cors'
                     });
                     
@@ -970,50 +1758,15 @@
                     // Remove loading message
                     removeMessage(loadingId);
                     
-                    // Extract and format AI response
-                    let aiResponse = '';
-                    
-                    // Handle different response formats from n8n
-                    if (Array.isArray(data) && data.length > 0) {
-                        // If response is an array, take the first item
-                        aiResponse = data[0].response || data[0].answer || data[0].text || '';
-                    } else if (data.response) {
-                        aiResponse = data.response;
-                    } else if (data.answer) {
-                        aiResponse = data.answer;
-                    } else if (data.text) {
-                        aiResponse = data.text;
-                    } else {
-                        aiResponse = JSON.stringify(data);
-                    }
-                    
-                    // Clean up formatting: replace \n\n with proper line breaks and \n* with bullet points
-                    aiResponse = aiResponse
-                        .replace(/\\n\\n/g, '<br><br>')  // Double line breaks
-                        .replace(/\\n\*/g, '<br>•')     // Bullet points  
-                        .replace(/\\n/g, '<br>')       // Single line breaks
-                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold text
-                        // Handle numbered lists (1. 2. 3. 4.)
-                        .replace(/(\d+)\.\s*\*\*(.*?)\*\*/g, '<br><br><strong>$1. $2</strong><br>')
-                        .replace(/(\d+)\.\s*([^<\n]*?):/g, '<br><br><strong>$1. $2:</strong>')
-                        // Clean up asterisks that aren't part of formatting
-                        .replace(/\*\s+\*\*/g, '<br>• <strong>')
-                        .replace(/\*\s+([^*\n]+)/g, '<br>• $1')
-                        .replace(/\*([^*\n]+?):\*\*/g, '<br>• <strong>$1:</strong>')
-                        // Clean up remaining single asterisks
-                        .replace(/\*\s*/g, '')
-                        .trim();
-                    
-                    // Make product links clickable and functional
+                    // Process AI response
+                    let aiResponse = extractAIResponse(data);
                     aiResponse = makeProductLinksClickable(aiResponse);
                     
-                    // If response is still empty or just formatting, provide fallback
                     if (!aiResponse || aiResponse.length < 10) {
-                        aiResponse = 'I received your question but encountered an issue generating a properly formatted response. Please try asking about our products, prices, or store policies.';
+                        aiResponse = generateFallbackResponse(question);
                     }
                     
                     addMessage(aiResponse, 'bot');
-                    
                     success = true;
                     break;
                     
@@ -1025,26 +1778,8 @@
             }
             
             if (!success) {
-                // Remove loading message
                 removeMessage(loadingId);
-                
-                // Add detailed error message
-                const errorMsg = `
-                    <strong>Connection Error:</strong><br>
-                    Unable to connect to the StyleHub product database. Please check:<br><br>
-                    
-                    <strong>1. n8n Workflow Status:</strong><br>
-                    • Is your n8n workflow <strong>Active</strong>?<br>
-                    • Is it showing "Waiting for trigger event from Chat Webhook"?<br><br>
-                    
-                    <strong>2. Webhook URL:</strong><br>
-                    • Check the Chat Webhook node for the correct URL<br>
-                    • Test URL: <code>http://localhost:5678/webhook-test/204ffc19-8edc-4630-a7dc-bd62d9143ef7</code><br><br>
-                    
-                    <strong>Technical Details:</strong><br>
-                    Last error: ${lastError?.message || 'Connection failed'}
-                `;
-                
+                const errorMsg = generateErrorMessage(lastError);
                 addMessage(errorMsg, 'bot');
             }
             
@@ -1053,6 +1788,136 @@
             button.disabled = false;
             button.textContent = 'Send';
             input.focus();
+        }
+
+        async function showStagedLoading() {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageId = 'loading-' + Date.now();
+            
+            // Create loading container
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message loading';
+            loadingDiv.id = messageId;
+            
+            const loadingContainer = document.createElement('div');
+            loadingContainer.className = 'loading-container';
+            
+            // Create stages
+            loadingStages.forEach((stage, index) => {
+                const stageDiv = document.createElement('div');
+                stageDiv.className = 'loading-stage';
+                stageDiv.innerHTML = `
+                    <div class="stage-icon pending">${stage.icon}</div>
+                    <div class="stage-text">${stage.text}</div>
+                `;
+                loadingContainer.appendChild(stageDiv);
+            });
+            
+            // Add progress bar
+            const progressDiv = document.createElement('div');
+            progressDiv.className = 'loading-progress';
+            progressDiv.innerHTML = '<div class="progress-bar" style="width: 0%"></div>';
+            loadingContainer.appendChild(progressDiv);
+            
+            loadingDiv.appendChild(loadingContainer);
+            chatMessages.appendChild(loadingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Animate through stages
+            let currentStage = 0;
+            const totalDuration = loadingStages.reduce((sum, stage) => sum + stage.duration, 0);
+            let elapsedTime = 0;
+            
+            const progressBar = progressDiv.querySelector('.progress-bar');
+            
+            for (let i = 0; i < loadingStages.length; i++) {
+                const stage = loadingStages[i];
+                const stageElement = loadingContainer.children[i];
+                const icon = stageElement.querySelector('.stage-icon');
+                
+                // Activate current stage
+                stageElement.classList.add('active');
+                icon.classList.remove('pending');
+                icon.classList.add('active');
+                
+                // Update progress
+                elapsedTime += stage.duration;
+                const progress = (elapsedTime / totalDuration) * 100;
+                progressBar.style.width = progress + '%';
+                
+                await new Promise(resolve => setTimeout(resolve, stage.duration));
+                
+                // Complete current stage
+                stageElement.classList.remove('active');
+                stageElement.classList.add('completed');
+                icon.classList.remove('active');
+                icon.classList.add('completed');
+                icon.textContent = '✓';
+            }
+            
+            return messageId;
+        }
+
+        function extractAIResponse(data) {
+            let aiResponse = '';
+            
+            if (Array.isArray(data) && data.length > 0) {
+                aiResponse = data[0].response || data[0].answer || data[0].text || '';
+            } else if (data.response) {
+                aiResponse = data.response;
+            } else if (data.answer) {
+                aiResponse = data.answer;
+            } else if (data.text) {
+                aiResponse = data.text;
+            } else {
+                aiResponse = JSON.stringify(data);
+            }
+            
+            // Enhanced formatting
+            return aiResponse
+                .replace(/\\n\\n/g, '<br><br>')
+                .replace(/\\n\*/g, '<br>•')
+                .replace(/\\n/g, '<br>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/(\d+)\.\s*\*\*(.*?)\*\*/g, '<br><br><strong>$1. $2</strong><br>')
+                .replace(/(\d+)\.\s*([^<\n]*?):/g, '<br><br><strong>$1. $2:</strong>')
+                .replace(/\*\s+\*\*/g, '<br>• <strong>')
+                .replace(/\*\s+([^*\n]+)/g, '<br>• $1')
+                .replace(/\*([^*\n]+?):\*\*/g, '<br>• <strong>$1:</strong>')
+                .replace(/\*\s*/g, '')
+                .trim();
+        }
+
+        function generateFallbackResponse(question) {
+            // Smart fallback based on question content
+            if (question.toLowerCase().includes('professional') || question.toLowerCase().includes('work')) {
+                return `For professional looks, I'd recommend our <strong>Classic White Button-Up</strong> paired with our <strong>Business Casual Chinos</strong>. These pieces create a polished, professional appearance perfect for work meetings. Would you like me to show you these items?`;
+            } else if (question.toLowerCase().includes('casual') || question.toLowerCase().includes('weekend')) {
+                return `For casual weekend style, try our <strong>Basic Cotton T-Shirt</strong> with comfortable jeans or chinos. It's effortlessly stylish yet relaxed. Check out our men's or women's casual collections for more options!`;
+            } else if (question.toLowerCase().includes('recommendation')) {
+                return `Based on your style profile, I recommend checking out our AI-curated featured collection. I've selected items that match your preferences for modern, professional pieces. Would you like to see personalized recommendations?`;
+            } else {
+                return `I'd be happy to help you find the perfect style! I can assist with product recommendations, styling advice, size information, and store policies. What specific type of clothing or style are you looking for today?`;
+            }
+        }
+
+        function generateErrorMessage(error) {
+            return `
+                <strong>🔧 Demo Mode Active</strong><br><br>
+                I'm currently running in demo mode while the AI backend is connecting. I can still help you with:<br><br>
+                
+                <strong>• Product Discovery:</strong> Browse our curated collections<br>
+                <strong>• Smart Recommendations:</strong> AI-powered suggestions based on your style<br>
+                <strong>• Style Advice:</strong> Get outfit inspiration and pairing ideas<br>
+                <strong>• Shopping Cart:</strong> Add items and see intelligent product recommendations<br><br>
+                
+                Try clicking on any product or use the demo scenarios above to see the AI shopping experience in action!
+            `;
+        }
+
+        function getCurrentCategory() {
+            const activeTab = document.querySelector('.category-tab.active');
+            return activeTab ? activeTab.textContent.toLowerCase() : 'featured';
         }
 
         function addMessage(text, type) {
@@ -1081,139 +1946,76 @@
             }
         }
 
-        // Make product links clickable and functional - WOW FACTOR!
+        // Enhanced product linking with highlighting
         function makeProductLinksClickable(text) {
             let processedText = text;
             const allProducts = Object.values(products).flat();
             
-            // 1. Handle direct /products/product-name links
-            processedText = processedText.replace(/\/products\/([a-z-]+)/gi, (match, slug) => {
-                // Convert slug back to product name (e.g., "floral-summer-dress" -> "floral summer dress")
-                const productName = slug.replace(/-/g, ' ');
-                const matchingProduct = allProducts.find(p => 
-                    p.name.toLowerCase().includes(productName) || 
-                    productName.includes(p.name.toLowerCase()) ||
-                    // More flexible matching
-                    p.name.toLowerCase().split(' ').some(word => productName.includes(word) && word.length > 3)
-                );
-                
-                if (matchingProduct) {
-                    return `<a href="#" class="product-link" onclick="showProductFromChat(${matchingProduct.id})" style="color: #667eea; font-weight: bold; text-decoration: underline; cursor: pointer; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); padding: 2px 6px; border-radius: 4px;">${match}</a>`;
-                }
-                return match;
-            });
-
-            // 2. Handle direct product name mentions (like "Floral Summer Dress")
+            // Handle direct product name mentions
             allProducts.forEach(product => {
                 const productNameRegex = new RegExp(`\\b${product.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi');
                 processedText = processedText.replace(productNameRegex, (match) => {
-                    // Don't double-wrap already linked products
                     if (processedText.includes(`onclick="showProductFromChat(${product.id})"`)) {
                         return match;
                     }
-                    return `<a href="#" class="product-link" onclick="showProductFromChat(${product.id})" style="color: #667eea; font-weight: bold; text-decoration: underline; cursor: pointer; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); padding: 2px 6px; border-radius: 4px; transition: all 0.3s ease;" onmouseover="this.style.background='linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2))'" onmouseout="this.style.background='linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1))'">${match}</a>`;
+                    return `<a href="#" class="product-link" onclick="showProductFromChat(${product.id})" style="color: var(--accent-blue); font-weight: 600; text-decoration: underline; cursor: pointer; background: rgba(37, 99, 235, 0.1); padding: 2px 6px; border-radius: 4px; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(37, 99, 235, 0.2)'" onmouseout="this.style.background='rgba(37, 99, 235, 0.1)'">${match}</a>`;
                 });
             });
 
             return processedText;
         }
 
-        // Show product from chat - THE WOW FACTOR FEATURE!
+        // Enhanced product highlighting
         function showProductFromChat(productId) {
-            // Find the product
             const product = Object.values(products).flat().find(p => p.id === productId);
             if (!product) return;
 
-            // Close the chat to show the product
-            toggleChat();
+            // Close the chat but keep it minimized
+            const chatPanel = document.getElementById('chatPanel');
+            if (chatPanel.classList.contains('active')) {
+                toggleChat();
+            }
 
-            // Navigate to the correct category
-            showCategory(product.category === 'mens' ? 'mens' : product.category === 'womens' ? 'womens' : product.category === 'accessories' ? 'accessories' : 'featured');
+            // Navigate to correct category
+            showCategory(product.category);
 
-            // Wait for the products to load, then highlight the specific product
+            // Wait for products to load, then highlight
             setTimeout(() => {
-                const productCard = document.querySelector(`[onclick="viewProduct(${productId})"]`);
+                const productCard = document.querySelector(`[data-product-id="${productId}"]`);
                 if (productCard) {
-                    // Scroll to and highlight the product
+                    // Scroll to product
                     productCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     
-                    // Add special highlight effect
-                    productCard.style.transform = 'translateY(-20px) scale(1.05)';
-                    productCard.style.boxShadow = '0 30px 80px rgba(102, 126, 234, 0.4)';
-                    productCard.style.border = '3px solid #667eea';
-                    productCard.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(240, 243, 255, 0.95))';
+                    // Add highlight effect
+                    productCard.classList.add('product-highlight');
                     
-                    // Add pulsing glow effect
-                    const glowInterval = setInterval(() => {
-                        productCard.style.boxShadow = productCard.style.boxShadow.includes('rgba(102, 126, 234, 0.4)') 
-                            ? '0 30px 80px rgba(102, 126, 234, 0.6)' 
-                            : '0 30px 80px rgba(102, 126, 234, 0.4)';
-                    }, 1000);
-
-                    // Remove highlight after 5 seconds
+                    // Remove highlight after animation
                     setTimeout(() => {
-                        clearInterval(glowInterval);
-                        productCard.style.transform = '';
-                        productCard.style.boxShadow = '';
-                        productCard.style.border = '';
-                        productCard.style.background = '';
-                        productCard.style.transition = 'all 0.5s ease';
-                    }, 5000);
-
-                    // Show a success message with context
-                    addMessage(`✨ Here's the ${product.name} you were asking about! It's highlighted above for $${product.price}. Would you like to know more about it?`, 'bot');
-                    
-                    // Send context to AI so it remembers what product we're discussing
-                    setTimeout(() => {
-                        sendContextMessage(`I just showed the customer the ${product.name} (${product.description}) for $${product.price}. They can see it highlighted on the page. If they ask follow-up questions, I'm referring to this specific product.`);
-                    }, 1000);
-                    
-                    // Show notification
-                    showNotification(`🎯 AI Magic: Found and highlighted "${product.name}" for you!`);
-                    
-                    // Auto-open chat again after a moment to continue the conversation
-                    setTimeout(() => {
-                        if (!document.getElementById('chatPanel').classList.contains('active')) {
-                            toggleChat();
-                        }
+                        productCard.classList.remove('product-highlight');
                     }, 2000);
+
+                    // Show success notification
+                    showNotification(`🎯 Found ${product.name} for $${product.price}`, 'success');
+                    
+                    // Add context message to chat
+                    setTimeout(() => {
+                        addMessage(`✨ Here's the <strong>${product.name}</strong> you were asking about! It's highlighted above for <strong>$${product.price}</strong>. ${product.description}. Would you like to add it to your cart or see similar items?`, 'bot');
+                    }, 1000);
                 }
-            }, 500);
+            }, 1000);
         }
 
-        // Send context message to AI (hidden from user) - MEMORY FIX!
-        async function sendContextMessage(contextText) {
-            try {
-                const response = await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ 
-                        question: contextText,
-                        isContext: true  // Flag to indicate this is context, not a user question
-                    }),
-                    mode: 'cors'
-                });
-                
-                // We don't need to handle the response since this is just context
-                console.log('Context sent to AI for memory preservation');
-            } catch (error) {
-                console.log('Context send failed, but continuing normally:', error);
-            }
-        }
-
-        // Notification system for enhanced UX
-        function showNotification(message) {
-            // Remove any existing notifications
+        // Enhanced notification system
+        function showNotification(message, type = 'default') {
+            // Remove existing notifications
             const existing = document.querySelector('.notification');
             if (existing) {
                 existing.remove();
             }
 
-            // Create new notification
+            // Create notification
             const notification = document.createElement('div');
-            notification.className = 'notification';
+            notification.className = `notification ${type}`;
             notification.innerHTML = `
                 ${message}
                 <button class="close-btn" onclick="this.parentElement.remove()">×</button>
@@ -1224,11 +2026,11 @@
             // Show notification
             setTimeout(() => notification.classList.add('show'), 100);
             
-            // Auto-hide after 4 seconds
+            // Auto-hide
             setTimeout(() => {
                 if (notification.parentElement) {
                     notification.classList.remove('show');
-                    setTimeout(() => notification.remove(), 500);
+                    setTimeout(() => notification.remove(), 400);
                 }
             }, 4000);
         }
