@@ -169,7 +169,7 @@
         }
 
         .ai-badge::before {
-            content: '🤖';
+            content: '✨';
             margin-right: 0.5rem;
         }
 
@@ -260,6 +260,11 @@
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
+        }
+
+        .ai-powered-badge::before {
+            content: '✨';
+            margin-right: 0.3rem;
         }
 
         .products-grid {
@@ -1171,6 +1176,7 @@
             </ul>
             <div class="nav-actions">
                 <input type="text" class="search-box" placeholder="Search for products...">
+                <a href="#" class="cart-icon" onclick="toggleWishlist()" id="wishlistIcon" style="margin-right: 1rem; background: var(--success-green);">💖 Wishlist (<span id="wishlistCount">0</span>)</a>
                 <a href="#" class="cart-icon" onclick="toggleCart()" id="cartIcon">🛒 Cart (<span id="cartCount">0</span>)</a>
             </div>
         </nav>
@@ -1202,7 +1208,7 @@
     <section class="products-section" id="products">
         <div class="section-header">
             <h2 class="section-title">Featured Products</h2>
-            <div class="ai-powered-badge">🤖 AI-Curated</div>
+            <div class="ai-powered-badge">AI-Curated</div>
         </div>
         <div class="products-grid" id="productsGrid">
             <!-- Products will be dynamically loaded here -->
@@ -1224,7 +1230,7 @@
 
     <!-- AI Assistant -->
     <div class="ai-assistant">
-        <button class="chat-toggle" onclick="toggleChat()">🤖</button>
+        <button class="chat-toggle" onclick="toggleChat()">💬</button>
         <div class="chat-panel" id="chatPanel">
             <div class="chat-header">
                 <div>
@@ -1255,6 +1261,42 @@
                     <input type="text" class="chat-input" id="chatInput" placeholder="Ask about products, styling, or recommendations..." onkeypress="handleKeyPress(event)">
                     <button class="chat-send" onclick="sendMessage()">Send</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Drawer -->
+    <div class="cart-overlay" id="wishlistOverlay" onclick="toggleWishlist()"></div>
+    <div class="cart-drawer" id="wishlistDrawer">
+        <div class="cart-header">
+            <h2 class="cart-title">Your Wishlist</h2>
+            <button class="cart-close" onclick="toggleWishlist()">✕</button>
+        </div>
+        <div class="cart-content" id="wishlistContent">
+            <div class="cart-empty" id="wishlistEmpty">
+                <p>Your wishlist is empty</p>
+                <p style="font-size: 0.9rem; color: var(--secondary-gray); margin-top: 0.5rem;">Save items you love for later!</p>
+            </div>
+            <div id="wishlistItems"></div>
+        </div>
+        <div class="wishlist-summary" id="wishlistSummary" style="display: none; padding: 1.5rem; background: white; border-top: 1px solid var(--border-gray);">
+            <div style="margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 600; color: var(--primary-black);">
+                    <span>Total Wishlist Value:</span>
+                    <span id="wishlistTotal">$0.00</span>
+                </div>
+                <div style="font-size: 0.9rem; color: var(--secondary-gray); margin-top: 0.25rem;">
+                    Excluding taxes and shipping
+                </div>
+            </div>
+            <button onclick="moveAllToCart()" style="width: 100%; background: var(--primary-black); color: white; border: none; padding: 1rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.background='#374151'" onmouseout="this.style.background='var(--primary-black)'">
+                Move All to Cart
+            </button>
+        </div>
+        <div class="cart-recommendations" id="wishlistRecommendations" style="display: none;">
+            <h3 class="cart-rec-title">✨ You Might Also Like</h3>
+            <div class="cart-rec-grid" id="wishlistRecGrid">
+                <!-- AI recommendations based on wishlist items -->
             </div>
         </div>
     </div>
@@ -1340,7 +1382,7 @@
             budget_range: [30, 150]
         };
 
-        // Product data with precisely matched images for each item
+        // Product data with precisely matched images - fixed to exactly match product descriptions
         const products = {
             featured: [
                 { 
@@ -1407,29 +1449,30 @@
             mens: [
                 { id: 1, name: "Classic White Button-Up", price: 49.99, category: "mens", image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=600&fit=crop", description: "Timeless professional shirt perfect for business meetings", aiRecommended: true },
                 { id: 5, name: "Basic Cotton T-Shirt", price: 19.99, category: "mens", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=600&fit=crop", description: "Essential wardrobe staple in premium cotton", aiRecommended: false },
-                { id: 7, name: "Premium Oxford Shirt", price: 59.99, category: "mens", image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&h=600&fit=crop", description: "Sophisticated button-down for professionals", aiRecommended: true },
+                { id: 7, name: "Premium Oxford Shirt", price: 59.99, category: "mens", image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=600&fit=crop", description: "Sophisticated button-down for professionals", aiRecommended: true },
                 { id: 8, name: "Classic Dark Jeans", price: 79.99, category: "mens", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=600&fit=crop", description: "Premium denim with perfect stretch", aiRecommended: false },
-                { id: 9, name: "Casual Polo Shirt", price: 34.99, category: "mens", image: "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=400&h=600&fit=crop", description: "Comfortable everyday wear", aiRecommended: false },
-                { id: 10, name: "Classic Blazer", price: 149.99, category: "mens", image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=600&fit=crop", description: "Versatile business jacket", aiRecommended: true }
+                { id: 9, name: "Casual Polo Shirt", price: 34.99, category: "mens", image: "https://images.unsplash.com/photo-1627225806124-bcf5d0df8d6d?w=400&h=600&fit=crop", description: "Comfortable everyday wear", aiRecommended: false },
+                { id: 10, name: "Classic Blazer", price: 149.99, category: "mens", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop", description: "Versatile business jacket", aiRecommended: true }
             ],
             womens: [
                 { id: 2, name: "Little Black Dress", price: 79.99, category: "womens", image: "https://images.unsplash.com/photo-1566479179817-c0c7bb2f0e6c?w=400&h=600&fit=crop", description: "Perfect for any occasion", aiRecommended: true },
                 { id: 4, name: "Cashmere Sweater", price: 119.99, category: "womens", image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=400&h=600&fit=crop", description: "Luxuriously soft premium cashmere", aiRecommended: false },
                 { id: 6, name: "Floral Summer Dress", price: 49.99, category: "womens", image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=400&h=600&fit=crop", description: "Perfect for warm weather occasions", aiRecommended: false },
-                { id: 11, name: "Classic White Blouse", price: 44.99, category: "womens", image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=600&fit=crop", description: "Versatile professional top", aiRecommended: true },
+                { id: 11, name: "Classic White Blouse", price: 44.99, category: "womens", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=600&fit=crop", description: "Versatile professional top", aiRecommended: true },
                 { id: 12, name: "High-Waisted Jeans", price: 69.99, category: "womens", image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400&h=600&fit=crop", description: "Flattering skinny fit", aiRecommended: false },
                 { id: 13, name: "Casual Maxi Dress", price: 39.99, category: "womens", image: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=400&h=600&fit=crop", description: "Comfortable everyday wear", aiRecommended: true }
             ],
             accessories: [
-                { id: 14, name: "Leather Belt", price: 29.99, category: "accessories", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop", description: "Classic leather with silver buckle", aiRecommended: false },
-                { id: 15, name: "Silk Scarf", price: 34.99, category: "accessories", image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=400&fit=crop", description: "Elegant square scarf", aiRecommended: true },
+                { id: 14, name: "Leather Belt", price: 29.99, category: "accessories", image: "https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=400&h=400&fit=crop", description: "Classic leather with silver buckle", aiRecommended: false },
+                { id: 15, name: "Silk Scarf", price: 34.99, category: "accessories", image: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=400&h=400&fit=crop", description: "Elegant square scarf", aiRecommended: true },
                 { id: 16, name: "Leather Handbag", price: 89.99, category: "accessories", image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=400&fit=crop", description: "Structured bag with strap", aiRecommended: true },
-                { id: 17, name: "Statement Necklace", price: 19.99, category: "accessories", image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop", description: "Bold gold-plated necklace", aiRecommended: false }
+                { id: 17, name: "Statement Necklace", price: 19.99, category: "accessories", image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop", description: "Elegant pearl necklace", aiRecommended: false }
             ]
         };
 
-        // Cart management
+        // Cart and wishlist management
         let cart = [];
+        let wishlist = [];
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
@@ -1446,6 +1489,13 @@
             if (savedCart) {
                 cart = JSON.parse(savedCart);
                 updateCartUI();
+            }
+
+            // Load wishlist from localStorage
+            const savedWishlist = localStorage.getItem('wishlist');
+            if (savedWishlist) {
+                wishlist = JSON.parse(savedWishlist);
+                updateWishlistUI();
             }
 
             // Load featured products
@@ -1536,6 +1586,9 @@
 
             // Smooth scroll to products section
             document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+            
+            // Update heart icons after products load
+            setTimeout(updateHeartIcons, 100);
         }
 
         function loadRecommendations() {
@@ -1624,10 +1677,223 @@
             event.stopPropagation();
             const product = Object.values(products).flat().find(p => p.id === id);
             if (product) {
-                event.target.innerHTML = '♥';
-                event.target.style.color = '#ef4444';
+                const existingItem = wishlist.find(item => item.id === id);
+                if (existingItem) {
+                    // Remove from wishlist
+                    wishlist = wishlist.filter(item => item.id !== id);
+                    event.target.innerHTML = '♡';
+                    event.target.style.color = '';
+                    showNotification(`💔 ${product.name} removed from wishlist`, 'success');
+                } else {
+                    // Add to wishlist
+                    wishlist.push({ ...product });
+                    event.target.innerHTML = '♥';
+                    event.target.style.color = '#ef4444';
+                    showNotification(`💖 ${product.name} added to wishlist!`, 'success');
+                }
+                updateWishlistUI();
+                saveWishlist();
+                updateWishlistRecommendations();
+            }
+        }
+
+        // Wishlist management functions
+        function toggleWishlist() {
+            const wishlistDrawer = document.getElementById('wishlistDrawer');
+            const wishlistOverlay = document.getElementById('wishlistOverlay');
+            
+            wishlistDrawer.classList.toggle('active');
+            wishlistOverlay.classList.toggle('active');
+            
+            if (wishlistDrawer.classList.contains('active')) {
+                updateWishlistRecommendations();
+            }
+        }
+
+        function updateWishlistUI() {
+            const wishlistCount = document.getElementById('wishlistCount');
+            const wishlistEmpty = document.getElementById('wishlistEmpty');
+            const wishlistItems = document.getElementById('wishlistItems');
+            const wishlistSummary = document.getElementById('wishlistSummary');
+            const wishlistTotal = document.getElementById('wishlistTotal');
+            
+            wishlistCount.textContent = wishlist.length;
+            
+            if (wishlist.length === 0) {
+                wishlistEmpty.style.display = 'block';
+                wishlistItems.innerHTML = '';
+                wishlistSummary.style.display = 'none';
+            } else {
+                wishlistEmpty.style.display = 'none';
+                wishlistSummary.style.display = 'block';
+                
+                // Calculate total
+                const total = wishlist.reduce((sum, item) => sum + item.price, 0);
+                wishlistTotal.textContent = `$${total.toFixed(2)}`;
+                
+                wishlistItems.innerHTML = wishlist.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-image">
+                            ${item.image.includes('.png') ? 
+                                `<img src="${item.image}" alt="${item.name}">` :
+                                item.image.includes('http') ? 
+                                `<img src="${item.image}" alt="${item.name}">` :
+                                `<div style="font-size: 2rem;">${item.image}</div>`
+                            }
+                        </div>
+                        <div class="cart-item-details">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">$${item.price}</div>
+                            <div class="cart-item-actions">
+                                <button onclick="addToCartFromWishlist(${item.id})" style="background: var(--accent-blue); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600; margin-right: 0.5rem;">Add to Cart</button>
+                                <button class="remove-item-btn" onclick="removeFromWishlist(${item.id})">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Update heart icons on product cards
+            updateHeartIcons();
+        }
+
+        function updateHeartIcons() {
+            // Update all wishlist buttons to reflect current state
+            document.querySelectorAll('.btn-wishlist').forEach(button => {
+                const productCard = button.closest('.product-card');
+                if (productCard) {
+                    const productId = parseInt(productCard.getAttribute('data-product-id'));
+                    const isInWishlist = wishlist.some(item => item.id === productId);
+                    if (isInWishlist) {
+                        button.innerHTML = '♥';
+                        button.style.color = '#ef4444';
+                    } else {
+                        button.innerHTML = '♡';
+                        button.style.color = '';
+                    }
+                }
+            });
+        }
+
+        function addToCartFromWishlist(productId) {
+            const product = wishlist.find(p => p.id === productId);
+            if (product) {
+                // Check if item already in cart
+                const existingItem = cart.find(item => item.id === productId);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({ ...product, quantity: 1 });
+                }
+                
+                updateCartUI();
+                saveCart();
+                updateCartRecommendations();
+                showNotification(`✅ ${product.name} moved to cart!`, 'success');
+            }
+        }
+
+        function removeFromWishlist(productId) {
+            const removedItem = wishlist.find(item => item.id === productId);
+            wishlist = wishlist.filter(item => item.id !== productId);
+            updateWishlistUI();
+            saveWishlist();
+            updateWishlistRecommendations();
+            showNotification(`💔 ${removedItem.name} removed from wishlist`, 'success');
+        }
+
+        function moveAllToCart() {
+            if (wishlist.length === 0) return;
+            
+            wishlist.forEach(item => {
+                const existingItem = cart.find(cartItem => cartItem.id === item.id);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({ ...item, quantity: 1 });
+                }
+            });
+            
+            const itemCount = wishlist.length;
+            wishlist = [];
+            
+            updateWishlistUI();
+            updateCartUI();
+            saveWishlist();
+            saveCart();
+            updateCartRecommendations();
+            
+            showNotification(`🛒 Moved ${itemCount} items to cart!`, 'success');
+        }
+
+        function updateWishlistRecommendations() {
+            const wishlistRecommendations = document.getElementById('wishlistRecommendations');
+            const wishlistRecGrid = document.getElementById('wishlistRecGrid');
+            
+            if (wishlist.length === 0) {
+                wishlistRecommendations.style.display = 'none';
+                return;
+            }
+            
+            // AI logic for wishlist-based recommendations
+            const allProducts = Object.values(products).flat();
+            const wishlistProductIds = wishlist.map(item => item.id);
+            const wishlistCategories = wishlist.map(item => item.category);
+            
+            // Find similar and complementary products
+            const recommendations = allProducts.filter(product => {
+                // Don't recommend items already in wishlist
+                if (wishlistProductIds.includes(product.id)) return false;
+                
+                // Recommend from similar categories or AI recommended items
+                const isSimilarCategory = wishlistCategories.includes(product.category);
+                const isComplementary = product.aiRecommended;
+                const matchesStyle = wishlist.some(wishItem => 
+                    wishItem.description.toLowerCase().includes('professional') && product.description.toLowerCase().includes('professional') ||
+                    wishItem.description.toLowerCase().includes('casual') && product.description.toLowerCase().includes('casual')
+                );
+                
+                return (isSimilarCategory || isComplementary || matchesStyle);
+            }).slice(0, 4);
+            
+            if (recommendations.length > 0) {
+                wishlistRecGrid.innerHTML = recommendations.map(product => `
+                    <div class="cart-rec-item" onclick="addToWishlistFromRec(${product.id}, event)">
+                        <div class="cart-rec-image">
+                            ${product.image.includes('.png') ? 
+                                `<img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">` :
+                                product.image.includes('http') ? 
+                                `<img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">` :
+                                `${product.image}`
+                            }
+                        </div>
+                        <div class="cart-rec-info">
+                            <div class="cart-rec-name">${product.name}</div>
+                            <div class="cart-rec-price">$${product.price}</div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                wishlistRecommendations.style.display = 'block';
+            } else {
+                wishlistRecommendations.style.display = 'none';
+            }
+        }
+
+        function addToWishlistFromRec(productId, event) {
+            event.stopPropagation();
+            const product = Object.values(products).flat().find(p => p.id === productId);
+            if (product) {
+                wishlist.push({ ...product });
+                updateWishlistUI();
+                saveWishlist();
+                updateWishlistRecommendations();
                 showNotification(`💖 ${product.name} added to wishlist!`, 'success');
             }
+        }
+
+        function saveWishlist() {
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
         }
 
         // Cart management
