@@ -2140,54 +2140,23 @@
             localStorage.setItem('cart', JSON.stringify(cart));
         }
 
-        // Check if question needs gender clarification
+        // Check if question needs gender clarification (simplified for QA Chain)
         function checkIfNeedsGenderClarification(question) {
             const lowerQuestion = question.toLowerCase();
             
-            // Questions that typically need gender clarification
-            const ambiguousPatterns = [
-                'job interview', 'interview', 'work', 'professional', 'office',
-                'night out', 'date', 'dinner', 'party', 'wedding', 'event',
-                'casual', 'outfit', 'clothes', 'clothing', 'style',
-                'good for', 'what to wear', 'what should i wear'
+            // Only ask for very specific ambiguous questions
+            const veryAmbiguous = [
+                'job interview', 'night out', 'what should i wear for'
             ];
             
-            // Skip if gender is already specified in the question
-            const hasGenderContext = lowerQuestion.includes('men\'s') || lowerQuestion.includes('women\'s') || 
-                                   lowerQuestion.includes('for men') || lowerQuestion.includes('for women');
+            // Skip if gender is already mentioned
+            const hasGender = lowerQuestion.includes('men') || lowerQuestion.includes('women') || 
+                             lowerQuestion.includes('male') || lowerQuestion.includes('female');
             
-            if (hasGenderContext) return false;
+            if (hasGender) return false;
             
-            // Check if question matches ambiguous patterns
-            return ambiguousPatterns.some(pattern => lowerQuestion.includes(pattern));
-        }
-
-        // Check if question should include gender context
-        function shouldIncludeGenderContext(question) {
-            const lowerQuestion = question.toLowerCase();
-            
-            // Questions that should NOT have gender context (general queries)
-            const genderNeutralPatterns = [
-                'most expensive', 'cheapest', 'least expensive', 'highest price', 'lowest price',
-                'price', 'cost', 'all items', 'everything', 'inventory', 'catalog',
-                'return policy', 'shipping', 'payment', 'size guide',
-                'what do you have', 'show me everything', 'all products'
-            ];
-            
-            // If it's a general query, don't add gender context
-            if (genderNeutralPatterns.some(pattern => lowerQuestion.includes(pattern))) {
-                return false;
-            }
-            
-            // Questions that SHOULD have gender context (clothing/outfit specific)
-            const genderSpecificPatterns = [
-                'outfit', 'clothes', 'clothing', 'style', 'wear', 'dress',
-                'shirt', 'pants', 'jacket', 'shoes', 'interview', 'work',
-                'casual', 'formal', 'party', 'date', 'wedding', 'event'
-            ];
-            
-            // Only add gender if it's clothing/outfit related
-            return genderSpecificPatterns.some(pattern => lowerQuestion.includes(pattern));
+            // Only for very ambiguous questions
+            return veryAmbiguous.some(pattern => lowerQuestion.includes(pattern));
         }
 
         // Enhanced chat functionality with staged loading
@@ -2264,32 +2233,16 @@
             addMessage(question, 'user');
             
             // Log session info for debugging
-            console.log('Sending message with sessionId:', sessionId);
+            console.log('Sending message:', question);
             console.log('Current user gender:', demoUser.gender);
-            console.log('Original question:', question);
-            console.log('Should include gender context:', shouldIncludeGenderContext(question));
             
-            const finalQuestion = (demoUser.gender && shouldIncludeGenderContext(question)) ? 
-                                 `${question} (for ${demoUser.gender === 'male' ? 'men' : 'women'})` : 
-                                 question;
-            console.log('Final question sent to AI:', finalQuestion);
-            
-            // Detect gender context from user message
+            // Simple gender detection for context
             const lowerQuestion = question.toLowerCase();
-            if ((lowerQuestion.includes('i am a man') || lowerQuestion.includes('i\'m a man') || 
-                 lowerQuestion.includes('i am male') || lowerQuestion.includes('for men') ||
-                 lowerQuestion.includes('guy') || lowerQuestion.includes('gentleman') ||
-                 lowerQuestion.includes('as a man') || lowerQuestion.includes('as a guy') ||
-                 lowerQuestion === 'men' || lowerQuestion === 'men\'s' || lowerQuestion === 'male')) {
+            if (lowerQuestion.includes('i am a man') || lowerQuestion.includes('as a man')) {
                 demoUser.gender = 'male';
                 localStorage.setItem('demoUser', JSON.stringify(demoUser));
                 console.log('Gender detected: male');
-            } else if ((lowerQuestion.includes('i am a woman') || lowerQuestion.includes('i\'m a woman') || 
-                       lowerQuestion.includes('i am female') || lowerQuestion.includes('for women') ||
-                       lowerQuestion.includes('lady') || lowerQuestion.includes('girl') ||
-                       lowerQuestion.includes('as a girl') || lowerQuestion.includes('as a woman') ||
-                       lowerQuestion.includes('for me as a girl') || lowerQuestion.includes('for me as a woman') ||
-                       lowerQuestion === 'women' || lowerQuestion === 'women\'s' || lowerQuestion === 'female')) {
+            } else if (lowerQuestion.includes('i am a woman') || lowerQuestion.includes('as a girl')) {
                 demoUser.gender = 'female';
                 localStorage.setItem('demoUser', JSON.stringify(demoUser));
                 console.log('Gender detected: female');
@@ -2322,13 +2275,7 @@
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({ 
-                            question: (demoUser.gender && shouldIncludeGenderContext(question)) ? 
-                                     `${question} (for ${demoUser.gender === 'male' ? 'men' : 'women'})` : 
-                                     question,
-                            sessionId: sessionId,
-                            userProfile: demoUser,
-                            cart: cart,
-                            currentCategory: getCurrentCategory()
+                            question: question
                         }),
                         mode: 'cors'
                     });
@@ -2448,14 +2395,13 @@
         function extractAIResponse(data) {
             let aiResponse = '';
             
-            if (Array.isArray(data) && data.length > 0) {
-                aiResponse = data[0].output || data[0].response || data[0].answer || data[0].text || '';
-            } else if (data.output) {
-                aiResponse = data.output;
-            } else if (data.response) {
+            // Simple extraction for QA Chain workflow
+            if (data.response) {
                 aiResponse = data.response;
             } else if (data.answer) {
                 aiResponse = data.answer;
+            } else if (data.output) {
+                aiResponse = data.output;
             } else if (data.text) {
                 aiResponse = data.text;
             } else {
