@@ -2395,8 +2395,10 @@
         function extractAIResponse(data) {
             let aiResponse = '';
             
-            // Simple extraction for QA Chain workflow
-            if (data.response) {
+            // Handle both direct response and array format from n8n
+            if (Array.isArray(data) && data.length > 0 && data[0].response) {
+                aiResponse = data[0].response;
+            } else if (data.response) {
                 aiResponse = data.response;
             } else if (data.answer) {
                 aiResponse = data.answer;
@@ -2408,29 +2410,34 @@
                 aiResponse = JSON.stringify(data);
             }
             
-            // Enhanced formatting with consistent bullet points and organization
+            // Clean and enhanced formatting
             return aiResponse
+                // Clean up any JSON artifacts
+                .replace(/^\[?\{"?response"?:\s*"?/i, '')
+                .replace(/"?\}?\]?$/, '')
+                
+                // Handle line breaks and formatting
                 .replace(/\\n\\n/g, '<br><br>')
                 .replace(/\\n\*/g, '<br>•')
                 .replace(/\\n/g, '<br>')
+                .replace(/\n\n/g, '<br><br>')
+                .replace(/\n\*/g, '<br>•')
+                .replace(/\n/g, '<br>')
+                
+                // Bold formatting
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/(\d+)\.\s*\*\*(.*?)\*\*/g, '<br><br><strong>$1. $2</strong><br>')
-                .replace(/(\d+)\.\s*([^<\n]*?):/g, '<br><br><strong>$1. $2:</strong>')
-                .replace(/\*\s+\*\*/g, '<br>• <strong>')
-                .replace(/\*\s+([^*\n]+)/g, '<br>• $1')
-                .replace(/\*([^*\n]+?):\*\*/g, '<br>• <strong>$1:</strong>')
-                .replace(/\*\s*/g, '')
-                // Remove "Name:" prefix and improve bullet formatting
-                .replace(/- Name:\s*/g, '• ')
-                .replace(/Name:\s*/g, '')
-                .replace(/- ([A-Z])/g, '• $1')
-                // Force bullet points for any product with price pattern (Product Name - $XX.XX)
+                
+                // Product formatting with bullet points
                 .replace(/^([A-Z][a-zA-Z\s&'-]+?)\s*-\s*\$([0-9.]+)/gm, '• $1 - $$$2')
                 .replace(/<br>([A-Z][a-zA-Z\s&'-]+?)\s*-\s*\$([0-9.]+)/g, '<br>• $1 - $$$2')
+                
                 // Clean up spacing and duplicates
                 .replace(/•\s*•/g, '•') // Remove double bullets
-                .replace(/\s*•\s*/g, '<br>• ') // Ensure proper spacing after breaks
+                .replace(/\s*•\s*/g, '<br>• ') // Ensure proper spacing
                 .replace(/^<br>/, '') // Remove leading break
+                .replace(/<br><br><br>/g, '<br><br>') // Remove triple breaks
+                .replace(/\s+<br>/g, '<br>') // Remove spaces before breaks
+                .replace(/<br>\s+/g, '<br>') // Remove spaces after breaks
                 .trim();
         }
 
