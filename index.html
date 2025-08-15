@@ -2421,7 +2421,7 @@
                 aiResponse = JSON.stringify(data);
             }
             
-            // Enhanced formatting with better organization
+            // Enhanced formatting with consistent bullet points and organization
             return aiResponse
                 .replace(/\\n\\n/g, '<br><br>')
                 .replace(/\\n\*/g, '<br>•')
@@ -2437,7 +2437,13 @@
                 .replace(/- Name:\s*/g, '• ')
                 .replace(/Name:\s*/g, '')
                 .replace(/- ([A-Z])/g, '• $1')
+                // Force bullet points for any product with price pattern (Product Name - $XX.XX)
+                .replace(/^([A-Z][a-zA-Z\s&'-]+?)\s*-\s*\$([0-9.]+)/gm, '• $1 - $$$2')
+                .replace(/<br>([A-Z][a-zA-Z\s&'-]+?)\s*-\s*\$([0-9.]+)/g, '<br>• $1 - $$$2')
+                // Clean up spacing and duplicates
                 .replace(/•\s*•/g, '•') // Remove double bullets
+                .replace(/\s*•\s*/g, '<br>• ') // Ensure proper spacing after breaks
+                .replace(/^<br>/, '') // Remove leading break
                 .trim();
         }
 
