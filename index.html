@@ -2140,6 +2140,30 @@
             localStorage.setItem('cart', JSON.stringify(cart));
         }
 
+        // Check if question needs gender clarification
+        function checkIfNeedsGenderClarification(question) {
+            const lowerQuestion = question.toLowerCase();
+            
+            // Questions that typically need gender clarification
+            const ambiguousPatterns = [
+                'job interview', 'interview', 'work', 'professional', 'office',
+                'night out', 'date', 'dinner', 'party', 'wedding', 'event',
+                'casual', 'outfit', 'clothes', 'clothing', 'style',
+                'good for', 'what to wear', 'what should i wear'
+            ];
+            
+            // Skip if gender is already specified in the question
+            const hasGenderContext = lowerQuestion.includes('men') || lowerQuestion.includes('women') || 
+                                   lowerQuestion.includes('male') || lowerQuestion.includes('female') ||
+                                   lowerQuestion.includes('guy') || lowerQuestion.includes('lady') ||
+                                   lowerQuestion.includes('gentleman') || lowerQuestion.includes('girl');
+            
+            if (hasGenderContext) return false;
+            
+            // Check if question matches ambiguous patterns
+            return ambiguousPatterns.some(pattern => lowerQuestion.includes(pattern));
+        }
+
         // Enhanced chat functionality with staged loading
         function toggleChat() {
             const chatPanel = document.getElementById('chatPanel');
@@ -2196,6 +2220,20 @@
             button.disabled = true;
             button.textContent = 'Processing...';
             
+            // Check for ambiguous questions that need clarification
+            const needsGenderClarification = checkIfNeedsGenderClarification(question);
+            if (needsGenderClarification && !demoUser.gender) {
+                addMessage(question, 'user');
+                const clarificationResponse = "I'd love to help you find the perfect outfit! Are you looking for men's or women's options? Just let me know and I'll show you our best recommendations.";
+                addMessage(clarificationResponse, 'bot');
+                
+                // Re-enable input
+                input.disabled = false;
+                button.disabled = false;
+                button.textContent = 'Send';
+                return;
+            }
+            
             // Add user message
             addMessage(question, 'user');
             
@@ -2206,12 +2244,14 @@
             const lowerQuestion = question.toLowerCase();
             if ((lowerQuestion.includes('i am a man') || lowerQuestion.includes('i\'m a man') || 
                  lowerQuestion.includes('i am male') || lowerQuestion.includes('for men') ||
-                 lowerQuestion.includes('guy') || lowerQuestion.includes('gentleman')) && !demoUser.gender) {
+                 lowerQuestion.includes('guy') || lowerQuestion.includes('gentleman') ||
+                 lowerQuestion === 'men' || lowerQuestion === 'men\'s' || lowerQuestion === 'male') && !demoUser.gender) {
                 demoUser.gender = 'male';
                 localStorage.setItem('demoUser', JSON.stringify(demoUser));
             } else if ((lowerQuestion.includes('i am a woman') || lowerQuestion.includes('i\'m a woman') || 
                        lowerQuestion.includes('i am female') || lowerQuestion.includes('for women') ||
-                       lowerQuestion.includes('lady') || lowerQuestion.includes('girl')) && !demoUser.gender) {
+                       lowerQuestion.includes('lady') || lowerQuestion.includes('girl') ||
+                       lowerQuestion === 'women' || lowerQuestion === 'women\'s' || lowerQuestion === 'female') && !demoUser.gender) {
                 demoUser.gender = 'female';
                 localStorage.setItem('demoUser', JSON.stringify(demoUser));
             }
@@ -2243,7 +2283,7 @@
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({ 
-                            question: question,
+                            question: demoUser.gender ? `${question} (for ${demoUser.gender === 'male' ? 'men' : 'women'})` : question,
                             sessionId: sessionId,
                             userProfile: demoUser,
                             cart: cart,
@@ -2485,11 +2525,16 @@
                 processedText.toLowerCase().includes(product.name.toLowerCase())
             );
             
-            if (productMentions.length > 0) {
+            // Remove duplicates by ID (same product in multiple categories)
+            const uniqueProductMentions = productMentions.filter((product, index, self) => 
+                self.findIndex(p => p.id === product.id) === index
+            );
+            
+            if (uniqueProductMentions.length > 0) {
                 processedText += `<br><br><div style="background: rgba(37, 99, 235, 0.05); border: 1px solid rgba(37, 99, 235, 0.2); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
                     <strong>Want me to add any of these to your cart?</strong><br>
                     <div style="margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                    ${productMentions.map(product => 
+                    ${uniqueProductMentions.map(product => 
                         `<button onclick="addToCartFromChat(${product.id})" style="background: var(--accent-blue); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='var(--accent-blue)'">Add ${product.name}</button>`
                     ).join('')}
                     </div>
