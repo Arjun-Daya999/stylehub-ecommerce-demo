@@ -2264,12 +2264,14 @@
                     
                     const data = await response.json();
                     console.log('Response received:', data);
+                    console.log('Response structure:', JSON.stringify(data, null, 2));
                     
                     // Remove loading message
                     removeMessage(loadingId);
                     
                     // Process AI response
                     let aiResponse = extractAIResponse(data);
+                    console.log('Extracted AI response:', aiResponse);
                     aiResponse = makeProductLinksClickable(aiResponse);
                     
                     if (!aiResponse || aiResponse.length < 10) {
@@ -2372,7 +2374,9 @@
             let aiResponse = '';
             
             if (Array.isArray(data) && data.length > 0) {
-                aiResponse = data[0].response || data[0].answer || data[0].text || '';
+                aiResponse = data[0].output || data[0].response || data[0].answer || data[0].text || '';
+            } else if (data.output) {
+                aiResponse = data.output;
             } else if (data.response) {
                 aiResponse = data.response;
             } else if (data.answer) {
