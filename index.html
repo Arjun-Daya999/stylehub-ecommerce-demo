@@ -1250,6 +1250,9 @@
                         <div class="status-indicator"></div>
                         AI Ready
                     </div>
+                    <div class="session-info" style="font-size: 0.7rem; color: #ccc; margin-top: 2px;">
+                        Memory: <span id="sessionDisplay">Active</span>
+                    </div>
                 </div>
                 <button class="chat-close" onclick="toggleChat()">✕</button>
             </div>
@@ -1386,10 +1389,18 @@
         const PUBLIC_WEBHOOK_URL = 'https://c013f0b2fde7.ngrok-free.app/webhook-test/204ffc19-8edc-4630-a7dc-bd62d9143ef7';
         const WEBHOOK_URL = USE_LOCAL_URL ? LOCAL_WEBHOOK_URL : PUBLIC_WEBHOOK_URL;
 
+        // Generate or retrieve session ID for conversation memory
+        let sessionId = localStorage.getItem('chatSessionId');
+        if (!sessionId) {
+            sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('chatSessionId', sessionId);
+        }
+
         // Demo user profile for AI recommendations
         const demoUser = {
             id: 'demo_user',
             name: 'Alex Chen',
+            gender: null, // Will be detected from conversation
             style_preferences: ['professional', 'modern', 'minimalist'],
             sizes: { tops: 'M', bottoms: '32', shoes: '10' },
             recent_purchases: [
@@ -1540,6 +1551,12 @@
                 const featuredTab = document.querySelector('.category-tab[onclick*="featured"]');
                 showCategory('featured', featuredTab);
                 loadRecommendations();
+                
+                // Update session display
+                const sessionDisplay = document.getElementById('sessionDisplay');
+                if (sessionDisplay) {
+                    sessionDisplay.textContent = sessionId.substring(8, 15) + '...'; // Show partial session ID
+                }
             }, 100);
         });
 
@@ -2062,7 +2079,7 @@
             const cartCategories = cart.map(item => item.category);
             
             // Find complementary products based on cart contents
-            const recommendations = uniqueProducts.filter(product => {
+            let recommendations = uniqueProducts.filter(product => {
                 // Don't recommend items already in cart
                 if (cartProductIds.includes(product.id)) return false;
                 
@@ -2071,20 +2088,35 @@
                 const hasMensItems = cartCategories.includes('mens');
                 const hasAccessories = cartCategories.includes('accessories');
                 
-                // Prioritize cross-category recommendations for outfit completion
+                // Priority 1: Cross-category recommendations for outfit completion
                 if (hasWomensItems && !hasMensItems && product.category === 'accessories') return true;
                 if (hasMensItems && !hasWomensItems && product.category === 'accessories') return true;
                 if ((hasWomensItems || hasMensItems) && !hasAccessories && product.category === 'accessories') return true;
                 
-                // Also include AI-recommended items from different categories
+                // Priority 2: AI-recommended items from different categories
                 const isDifferentCategory = !cartCategories.includes(product.category);
-                const isComplementary = product.aiRecommended;
+                if (isDifferentCategory && product.aiRecommended) return true;
                 
-                return isDifferentCategory && isComplementary;
-            }).slice(0, 4);
+                // Priority 3: Any items from different categories (fallback to ensure we always have recommendations)
+                return isDifferentCategory;
+            });
             
-            if (recommendations.length > 0) {
-                cartRecGrid.innerHTML = recommendations.map(product => `
+            // If we still don't have enough recommendations, include same category items
+            if (recommendations.length < 4) {
+                const fallbackRecs = uniqueProducts.filter(product => {
+                    if (cartProductIds.includes(product.id)) return false;
+                    return !recommendations.find(r => r.id === product.id); // Don't duplicate existing recommendations
+                });
+                recommendations = [...recommendations, ...fallbackRecs];
+            }
+            
+            // Always show exactly 4 recommendations
+            recommendations = recommendations.slice(0, 4);
+            
+            // Always show recommendations section if cart has items, even if recommendations array is empty
+            if (cart.length > 0) {
+                if (recommendations.length > 0) {
+                    cartRecGrid.innerHTML = recommendations.map(product => `
                     <div class="cart-rec-item" onclick="addToCart(${product.id}, event)">
                         <div class="cart-rec-image">
                             ${product.image.includes('.png') ? 
@@ -2100,6 +2132,9 @@
                         </div>
                     </div>
                 `).join('');
+                } else {
+                    cartRecGrid.innerHTML = '<p style="text-align: center; color: #666; padding: 1rem;">Looking for more great items...</p>';
+                }
                 
                 cartRecommendations.style.display = 'block';
             } else {
@@ -2115,6 +2150,23 @@
         function toggleChat() {
             const chatPanel = document.getElementById('chatPanel');
             chatPanel.classList.toggle('active');
+        }
+
+        // Function to reset chat session (useful for demo)
+        function resetChatSession() {
+            localStorage.removeItem('chatSessionId');
+            sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('chatSessionId', sessionId);
+            
+            // Clear chat messages
+            const messagesContainer = document.querySelector('.chat-messages');
+            messagesContainer.innerHTML = '';
+            
+            // Reset demo user gender
+            demoUser.gender = null;
+            localStorage.setItem('demoUser', JSON.stringify(demoUser));
+            
+            console.log('Chat session reset. New session ID:', sessionId);
         }
 
         function askDemoQuestion(question) {
@@ -2153,6 +2205,23 @@
             // Add user message
             addMessage(question, 'user');
             
+            // Log session info for debugging
+            console.log('Sending message with sessionId:', sessionId);
+            
+            // Detect gender context from user message
+            const lowerQuestion = question.toLowerCase();
+            if ((lowerQuestion.includes('i am a man') || lowerQuestion.includes('i\'m a man') || 
+                 lowerQuestion.includes('i am male') || lowerQuestion.includes('for men') ||
+                 lowerQuestion.includes('guy') || lowerQuestion.includes('gentleman')) && !demoUser.gender) {
+                demoUser.gender = 'male';
+                localStorage.setItem('demoUser', JSON.stringify(demoUser));
+            } else if ((lowerQuestion.includes('i am a woman') || lowerQuestion.includes('i\'m a woman') || 
+                       lowerQuestion.includes('i am female') || lowerQuestion.includes('for women') ||
+                       lowerQuestion.includes('lady') || lowerQuestion.includes('girl')) && !demoUser.gender) {
+                demoUser.gender = 'female';
+                localStorage.setItem('demoUser', JSON.stringify(demoUser));
+            }
+            
             // Show enhanced loading with stages
             const loadingId = await showStagedLoading();
             
@@ -2181,6 +2250,7 @@
                         },
                         body: JSON.stringify({ 
                             question: question,
+                            sessionId: sessionId,
                             userProfile: demoUser,
                             cart: cart,
                             currentCategory: getCurrentCategory()
@@ -2407,22 +2477,20 @@
                 });
             });
 
-            // Add cart management suggestions for product recommendations
-            if (processedText.includes('recommend') || processedText.includes('suggest') || processedText.includes('great option')) {
-                const productMentions = allProducts.filter(product => 
-                    processedText.toLowerCase().includes(product.name.toLowerCase())
-                );
-                
-                if (productMentions.length > 0) {
-                    processedText += `<br><br><div style="background: rgba(37, 99, 235, 0.05); border: 1px solid rgba(37, 99, 235, 0.2); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
-                        <strong>Want me to add any of these to your cart?</strong><br>
-                        <div style="margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                        ${productMentions.map(product => 
-                            `<button onclick="addToCartFromChat(${product.id})" style="background: var(--accent-blue); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='var(--accent-blue)'">Add ${product.name}</button>`
-                        ).join('')}
-                        </div>
-                    </div>`;
-                }
+            // Add cart management suggestions for ANY product mentions
+            const productMentions = allProducts.filter(product => 
+                processedText.toLowerCase().includes(product.name.toLowerCase())
+            );
+            
+            if (productMentions.length > 0) {
+                processedText += `<br><br><div style="background: rgba(37, 99, 235, 0.05); border: 1px solid rgba(37, 99, 235, 0.2); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                    <strong>Want me to add any of these to your cart?</strong><br>
+                    <div style="margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    ${productMentions.map(product => 
+                        `<button onclick="addToCartFromChat(${product.id})" style="background: var(--accent-blue); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='var(--accent-blue)'">Add ${product.name}</button>`
+                    ).join('')}
+                    </div>
+                </div>`;
             }
 
             return processedText;
