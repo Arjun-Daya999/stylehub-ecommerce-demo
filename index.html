@@ -1437,10 +1437,10 @@
                 },
                 { 
                     id: 2, 
-                    name: "Casual Dress", 
+                    name: "Little Black Dress", 
                     price: 79.99, 
                     category: "womens", 
-                    image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=600&fit=crop", 
+                    image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/little-black-dress.jpg", 
                     description: "Timeless little black dress perfect for cocktail parties", 
                     badge: "Bestseller",
                     aiRecommended: true 
@@ -1492,7 +1492,7 @@
                 { id: 25, name: "Cotton Socks (3-Pack)", price: 24.99, category: "mens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/Cotton%20Socks.jpg", description: "Comfortable crew socks with reinforced heel and toe", aiRecommended: false }
             ],
             womens: [
-                { id: 2, name: "Casual Dress", price: 79.99, category: "womens", image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=600&fit=crop", description: "Perfect for any occasion", aiRecommended: true },
+                { id: 2, name: "Little Black Dress", price: 79.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/little-black-dress.jpg", description: "Perfect for any occasion", aiRecommended: true },
                 { id: 4, name: "Cashmere Sweater", price: 119.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/cashmere-sweater.jpg", description: "Luxuriously soft premium cashmere", aiRecommended: false },
                 { id: 6, name: "Floral Summer Dress", price: 49.99, category: "womens", image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=400&h=600&fit=crop", description: "Perfect for warm weather occasions", aiRecommended: false },
                 { id: 11, name: "Classic White Blouse", price: 44.99, category: "womens", image: "https://raw.githubusercontent.com/Arjun-Daya999/stylehub-ecommerce-demo/main/casual-white-blouse.jpg", description: "Versatile professional top", aiRecommended: true },
@@ -1532,19 +1532,13 @@
                 localStorage.setItem('demoUser', JSON.stringify(demoUser));
             }
 
-            // Load cart from localStorage
-            const savedCart = localStorage.getItem('cart');
-            if (savedCart) {
-                cart = JSON.parse(savedCart);
-                updateCartUI();
-            }
-
-            // Load wishlist from localStorage
-            const savedWishlist = localStorage.getItem('wishlist');
-            if (savedWishlist) {
-                wishlist = JSON.parse(savedWishlist);
-                updateWishlistUI();
-            }
+            // Clear cart and wishlist for fresh demo experience
+            cart = [];
+            wishlist = [];
+            localStorage.removeItem('cart');
+            localStorage.removeItem('wishlist');
+            updateCartUI();
+            updateWishlistUI();
 
             // Load featured products
             setTimeout(() => {
@@ -2387,7 +2381,7 @@
                 aiResponse = JSON.stringify(data);
             }
             
-            // Enhanced formatting
+            // Enhanced formatting with better organization
             return aiResponse
                 .replace(/\\n\\n/g, '<br><br>')
                 .replace(/\\n\*/g, '<br>•')
@@ -2399,6 +2393,11 @@
                 .replace(/\*\s+([^*\n]+)/g, '<br>• $1')
                 .replace(/\*([^*\n]+?):\*\*/g, '<br>• <strong>$1:</strong>')
                 .replace(/\*\s*/g, '')
+                // Remove "Name:" prefix and improve bullet formatting
+                .replace(/- Name:\s*/g, '• ')
+                .replace(/Name:\s*/g, '')
+                .replace(/- ([A-Z])/g, '• $1')
+                .replace(/•\s*•/g, '•') // Remove double bullets
                 .trim();
         }
 
