@@ -2783,18 +2783,28 @@
         function extractAIResponse(data) {
             let aiResponse = '';
             
-            // Handle both direct response and array format from n8n
-            if (Array.isArray(data) && data.length > 0 && data[0].response) {
-                aiResponse = data[0].response;
+            // Handle the new memory workflow response format
+            if (Array.isArray(data) && data.length > 0) {
+                // Check for the new format: [{"output":"..."}]
+                if (data[0].output) {
+                    aiResponse = data[0].output;
+                } else if (data[0].response) {
+                    aiResponse = data[0].response;
+                } else if (data[0].answer) {
+                    aiResponse = data[0].answer;
+                } else if (data[0].text) {
+                    aiResponse = data[0].text;
+                }
+            } else if (data.output) {
+                aiResponse = data.output;
             } else if (data.response) {
                 aiResponse = data.response;
             } else if (data.answer) {
                 aiResponse = data.answer;
-            } else if (data.output) {
-                aiResponse = data.output;
             } else if (data.text) {
                 aiResponse = data.text;
             } else {
+                // Fallback: try to extract from any nested structure
                 aiResponse = JSON.stringify(data);
             }
             
