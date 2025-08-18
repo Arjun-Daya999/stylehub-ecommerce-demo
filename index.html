@@ -554,9 +554,9 @@
             position: absolute;
             bottom: 80px;
             right: 0;
-            width: 480px;
-            min-height: 500px;
-            max-height: 80vh;
+            width: 520px;
+            min-height: 550px;
+            max-height: 85vh;
             background: #ffffff;
             border-radius: 16px;
             box-shadow: 0 20px 64px rgba(0, 0, 0, 0.2);
@@ -566,7 +566,39 @@
             overflow: hidden;
             resize: both;
             overflow: auto;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        .chat-panel.expanded {
+            width: 600px;
+            min-height: 650px;
+            max-height: 90vh;
+        }
+
+        .chat-panel.compact {
+            width: 480px;
+            min-height: 500px;
+            max-height: 75vh;
+        }
+
+        .chat-resize-handle {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            cursor: nw-resize;
+            background: linear-gradient(-45deg, transparent 30%, var(--border-gray) 30%, var(--border-gray) 70%, transparent 70%);
+            border-radius: 0 0 16px 0;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .chat-panel:hover .chat-resize-handle {
+            opacity: 1;
+        }
+
+
 
         .chat-panel.active {
             display: flex;
@@ -613,6 +645,27 @@
             50% { opacity: 0.5; }
         }
 
+        .chat-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chat-new {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.25rem;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .chat-new:hover {
+            opacity: 1;
+        }
+
         .chat-close {
             background: none;
             border: none;
@@ -652,6 +705,54 @@
             display: inline-block;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             text-align: left;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .message:hover {
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .message.collapsible {
+            padding-right: 2rem;
+        }
+
+        .message-toggle {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: rgba(0, 0, 0, 0.1);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: var(--secondary-gray);
+            transition: all 0.2s ease;
+            opacity: 0;
+        }
+
+        .message:hover .message-toggle {
+            opacity: 1;
+        }
+
+        .message-toggle:hover {
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--primary-black);
+        }
+
+        .message.collapsed {
+            max-height: 3rem;
+            overflow: hidden;
+        }
+
+        .message.collapsed .message-toggle {
+            opacity: 1;
         }
 
         .message.short {
@@ -705,6 +806,18 @@
                 border-radius: 0;
                 min-height: 100vh;
                 max-height: 100vh;
+            }
+            
+            .chat-panel.expanded,
+            .chat-panel.compact {
+                width: 100vw;
+                height: 100vh;
+                min-height: 100vh;
+                max-height: 100vh;
+            }
+            
+            .chat-resize-handle {
+                display: none;
             }
             
             .chat-messages {
@@ -846,21 +959,57 @@
 
         .demo-scenarios {
             margin-bottom: 1rem;
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .demo-scenarios-header {
+            background: var(--light-gray);
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color 0.2s ease;
+        }
+
+        .demo-scenarios-header:hover {
+            background: #e5e7eb;
         }
 
         .demo-scenarios-title {
             font-size: 0.8rem;
             font-weight: 600;
             color: var(--secondary-gray);
-            margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            margin: 0;
+        }
+
+        .scenarios-toggle {
+            font-size: 0.7rem;
+            color: var(--secondary-gray);
+            transition: transform 0.3s ease;
+        }
+
+        .demo-scenarios.collapsed .scenarios-toggle {
+            transform: rotate(-90deg);
         }
 
         .demo-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            max-height: 200px;
+            overflow: hidden;
+        }
+
+        .demo-scenarios.collapsed .demo-buttons {
+            max-height: 0;
+            padding: 0 1rem;
         }
 
         .demo-button {
@@ -1366,6 +1515,7 @@
     <div class="ai-assistant">
         <button class="chat-toggle" onclick="toggleChat()">💬</button>
         <div class="chat-panel" id="chatPanel">
+            <div class="chat-resize-handle" id="chatResizeHandle"></div>
             <div class="chat-header">
                 <div>
                     <div class="chat-title">StyleHub AI Assistant</div>
@@ -1373,24 +1523,28 @@
                         <div class="status-indicator"></div>
                         AI Ready
                     </div>
-                    <div class="session-info" style="font-size: 0.7rem; color: #ccc; margin-top: 2px;">
-                        Memory: <span id="sessionDisplay">Active</span>
-                    </div>
                 </div>
-                <button class="chat-close" onclick="toggleChat()">✕</button>
+                <div class="chat-actions">
+                    <button class="chat-new" onclick="resetChatSession()" title="Start New Chat">🔄</button>
+                    <button class="chat-close" onclick="toggleChat()">✕</button>
+                </div>
             </div>
             <div class="chat-messages" id="chatMessages">
-                <div class="message bot">👋 Hi there! I'm your personal StyleHub AI assistant. I can help you discover amazing products, check our policies, and provide personalized recommendations based on your style. What are you looking for today?
+                <div class="message bot collapsible" id="intro-message">👋 Hi there! I'm your personal StyleHub AI assistant. I can help you discover amazing products, check our policies, and provide personalized recommendations based on your style. What are you looking for today?
+                    <button class="message-toggle" onclick="toggleMessage('intro-message')">−</button>
                 </div>
             </div>
             <div class="chat-input-area">
-                <div class="demo-scenarios">
-                    <div class="demo-scenarios-title">Try These Scenarios</div>
-                    <div class="demo-buttons">
+                <div class="demo-scenarios" id="demoScenarios">
+                    <div class="demo-scenarios-header" onclick="toggleScenarios()">
+                        <div class="demo-scenarios-title">Try These Scenarios</div>
+                        <div class="scenarios-toggle" id="scenariosToggle">▼</div>
+                    </div>
+                    <div class="demo-buttons" id="demoButtons">
                         <button class="demo-button" onclick="askDemoQuestion('I need a professional outfit for work meetings. One for men and one for women.')">Professional Look</button>
                         <button class="demo-button" onclick="askDemoQuestion('Show me something casual but stylish for weekends. One for men and one for women.')">Weekend Style</button>
                         <button class="demo-button" onclick="askDemoQuestion('What is a casual look with freinds for both men and women?')">Casual Look</button>
-                        <button class="demo-button" onclick="askDemoQuestion('Do you have any recommendations for me?')">Personalized Recs</button>
+                        <button class="demo-button" onclick="askDemoQuestion('What are your most affordable products?')">Cost Friendly</button>
                     </div>
                 </div>
                 <div class="chat-input-container">
@@ -1643,6 +1797,23 @@
         // Cart and wishlist management
         let cart = [];
         let wishlist = [];
+        
+        // Chat session management
+        let chatSessionId = localStorage.getItem('chatSessionId') || generateSessionId();
+        localStorage.setItem('chatSessionId', chatSessionId);
+        
+        // Generate unique session ID
+        function generateSessionId() {
+            return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+        
+        // Reset chat session (for new conversations)
+        function resetChatSession() {
+            chatSessionId = generateSessionId();
+            localStorage.setItem('chatSessionId', chatSessionId);
+            document.getElementById('chatMessages').innerHTML = '';
+            addMessage('Hello! I\'m your StyleHub AI assistant. I can help you find the perfect clothing and accessories. What are you looking for today?', 'bot');
+        }
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
@@ -1673,6 +1844,9 @@
                 if (sessionDisplay) {
                     sessionDisplay.textContent = sessionId.substring(8, 15) + '...'; // Show partial session ID
                 }
+                
+                // Initialize dynamic chat sizing
+                initializeChatResize();
             }, 100);
         });
 
@@ -2287,6 +2461,96 @@
             chatPanel.classList.toggle('active');
         }
 
+        // Toggle demo scenarios collapsible
+        function toggleScenarios() {
+            const demoScenarios = document.getElementById('demoScenarios');
+            const scenariosToggle = document.getElementById('scenariosToggle');
+            
+            demoScenarios.classList.toggle('collapsed');
+            
+            // Update toggle arrow
+            if (demoScenarios.classList.contains('collapsed')) {
+                scenariosToggle.textContent = '▶';
+            } else {
+                scenariosToggle.textContent = '▼';
+            }
+        }
+
+        // Toggle individual message collapse
+        function toggleMessage(messageId) {
+            const message = document.getElementById(messageId);
+            const toggleButton = message.querySelector('.message-toggle');
+            
+            message.classList.toggle('collapsed');
+            
+            // Update toggle button
+            if (message.classList.contains('collapsed')) {
+                toggleButton.innerHTML = '+';
+            } else {
+                toggleButton.innerHTML = '−';
+            }
+        }
+
+        // Dynamic chat panel sizing
+        function initializeChatResize() {
+            const chatPanel = document.getElementById('chatPanel');
+            const resizeHandle = document.getElementById('chatResizeHandle');
+            
+            let isResizing = false;
+            let startX, startY, startWidth, startHeight;
+            
+            resizeHandle.addEventListener('mousedown', (e) => {
+                isResizing = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                startWidth = chatPanel.offsetWidth;
+                startHeight = chatPanel.offsetHeight;
+                
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('mouseup', handleMouseUp);
+                e.preventDefault();
+            });
+            
+            function handleMouseMove(e) {
+                if (!isResizing) return;
+                
+                const deltaX = startX - e.clientX;
+                const deltaY = startY - e.clientY;
+                
+                const newWidth = Math.max(400, Math.min(800, startWidth + deltaX));
+                const newHeight = Math.max(450, Math.min(window.innerHeight * 0.9, startHeight + deltaY));
+                
+                chatPanel.style.width = newWidth + 'px';
+                chatPanel.style.height = newHeight + 'px';
+            }
+            
+            function handleMouseUp() {
+                isResizing = false;
+                document.removeEventListener('mousemove', handleMouseMove);
+                document.removeEventListener('mouseup', handleMouseUp);
+            }
+            
+            // Auto-expand for long conversations
+            function checkChatSize() {
+                const messages = chatPanel.querySelectorAll('.message');
+                const totalMessages = messages.length;
+                
+                if (totalMessages > 8) {
+                    chatPanel.classList.add('expanded');
+                    chatPanel.classList.remove('compact');
+                } else if (totalMessages < 4) {
+                    chatPanel.classList.add('compact');
+                    chatPanel.classList.remove('expanded');
+                } else {
+                    chatPanel.classList.remove('expanded', 'compact');
+                }
+            }
+            
+            // Check size when new messages are added
+            const observer = new MutationObserver(checkChatSize);
+            observer.observe(chatPanel.querySelector('.chat-messages'), { childList: true });
+        }
+
         // Function to reset chat session (useful for demo)
         function resetChatSession() {
             localStorage.removeItem('chatSessionId');
@@ -2356,6 +2620,7 @@
             
             // Log session info for debugging
             console.log('Sending message:', question);
+            console.log('Session ID:', chatSessionId);
             console.log('Current user gender:', demoUser.gender);
             
             // Simple gender detection for context
@@ -2397,7 +2662,8 @@
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({ 
-                            question: question
+                            question: question,
+                            sessionId: chatSessionId
                         }),
                         mode: 'cors'
                     });
@@ -2554,10 +2820,9 @@
                 .replace(/^\*\s+/gm, '• ')
                 .replace(/<br>\*\s+/g, '<br>• ')
                 
-                // Product formatting with consistent bullet points - no extra line breaks
+                // Product formatting with consistent bullet points
                 .replace(/^([A-Z][a-zA-Z\s&'-]+?)\s*-\s*\$([0-9.]+)/gm, '• $1 - $$$2')
                 .replace(/<br>([A-Z][a-zA-Z\s&'-]+?)\s*-\s*\$([0-9.]+)/g, '<br>• $1 - $$$2')
-                .replace(/([^•])\s*•\s*([A-Z][a-zA-Z\s&'-]+?)\s*-\s*\$([0-9.]+)/g, '$1<br>• $2 - $$$3')
                 
                 // Clean up spacing and duplicates
                 .replace(/•\s*•/g, '•') // Remove double bullets
@@ -2568,23 +2833,12 @@
                 .replace(/<br>\s+/g, '<br>') // Remove spaces after breaks
                 .replace(/\s{2,}/g, ' ') // Remove multiple spaces
                 
-                // Fix product list formatting - remove extra line breaks between products
-                .replace(/(• [^<]+)<br><br>(• [^<]+)/g, '$1<br>$2')
-                .replace(/(• [^<]+)<br><br>(• [^<]+)/g, '$1<br>$2') // Apply twice to catch all instances
-                
                 // Remove bullet points from regular paragraphs (not product lists)
                 .replace(/<br>• ([^$]+)$/gm, '<br>$1') // Remove bullet from end of paragraphs
                 .replace(/^• ([^$]+)<br>/gm, '$1<br>') // Remove bullet from start of paragraphs
                 
-                // Clean up any remaining double line breaks in product lists
-                .replace(/(• [^<]+)<br><br>(• [^<]+)/g, '$1<br>$2')
-                
                 // Ensure proper spacing after product lists
                 .replace(/(• [^<]+)<br>([A-Z][^<]*)/g, '$1<br><br>$2')
-                
-                // Final cleanup - remove any remaining excessive line breaks between bullet points
-                .replace(/(• [^<]+)<br><br>(• [^<]+)/g, '$1<br>$2')
-                .replace(/(• [^<]+)<br><br>(• [^<]+)/g, '$1<br>$2')
                 
                 // Remove excessive whitespace and normalize line breaks
                 .replace(/\s+/g, ' ') // Replace multiple spaces with single space
@@ -2642,7 +2896,7 @@
                 sizeClass = 'long';
             }
             
-            messageDiv.className = `message ${type} ${sizeClass}`;
+            messageDiv.className = `message ${type} ${sizeClass} collapsible`;
             messageDiv.id = messageId;
             
             if (type === 'bot' || type === 'loading') {
@@ -2656,6 +2910,16 @@
             } else {
                 messageDiv.textContent = text.trim();
             }
+            
+            // Add toggle button for collapsible messages
+            const toggleButton = document.createElement('button');
+            toggleButton.className = 'message-toggle';
+            toggleButton.innerHTML = '−';
+            toggleButton.onclick = (e) => {
+                e.stopPropagation();
+                toggleMessage(messageId);
+            };
+            messageDiv.appendChild(toggleButton);
             
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
