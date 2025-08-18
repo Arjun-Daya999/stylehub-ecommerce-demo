@@ -1799,8 +1799,8 @@
         let wishlist = [];
         
         // Chat session management
-        let chatSessionId = localStorage.getItem('chatSessionId') || generateSessionId();
-        localStorage.setItem('chatSessionId', chatSessionId);
+        let chatSessionId = sessionStorage.getItem('chatSessionId') || generateSessionId();
+        sessionStorage.setItem('chatSessionId', chatSessionId);
         
         // Generate unique session ID
         function generateSessionId() {
@@ -1810,7 +1810,7 @@
         // Reset chat session (for new conversations)
         function resetChatSession() {
             chatSessionId = generateSessionId();
-            localStorage.setItem('chatSessionId', chatSessionId);
+            sessionStorage.setItem('chatSessionId', chatSessionId);
             document.getElementById('chatMessages').innerHTML = '';
             addMessage('Hello! I\'m your StyleHub AI assistant. I can help you find the perfect clothing and accessories. What are you looking for today?', 'bot');
         }
