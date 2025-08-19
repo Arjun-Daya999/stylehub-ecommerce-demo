@@ -2841,6 +2841,9 @@
                 // Product formatting with consistent bullet points
                 .replace(/^([A-Z][a-zA-Z\s&'-]+?)\s*-\s*\$([0-9.]+)/gm, '• $1 - $$$2')
                 .replace(/<br>([A-Z][a-zA-Z\s&'-]+?)\s*-\s*\$([0-9.]+)/g, '<br>• $1 - $$$2')
+                // Handle products without prices or with different price formats
+                .replace(/^([A-Z][a-zA-Z\s&'-]+?)\s*-\s*(?!\$)([^<]+)/gm, '• $1 - $2')
+                .replace(/<br>([A-Z][a-zA-Z\s&'-]+?)\s*-\s*(?!\$)([^<]+)/g, '<br>• $1 - $2')
                 
                 // Clean up spacing and duplicates
                 .replace(/•\s*•/g, '•') // Remove double bullets
