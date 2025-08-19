@@ -1525,7 +1525,7 @@
                     </div>
                 </div>
                 <div class="chat-actions">
-                    <button class="chat-new" onclick="resetChatSession()" title="Start New Chat">🔄</button>
+                                            <button class="chat-new" onclick="resetChatSession()" title="Start New Chat">+</button>
                     <button class="chat-close" onclick="toggleChat()">✕</button>
                 </div>
             </div>
@@ -2955,13 +2955,15 @@
             
             // Handle direct product name mentions and make them clickable
             allProducts.forEach(product => {
-                const productNameRegex = new RegExp(`\\b${product.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi');
-                processedText = processedText.replace(productNameRegex, (match) => {
+                // Use a more flexible regex that handles multi-word product names better
+                const escapedName = product.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const productNameRegex = new RegExp(`(${escapedName})`, 'gi');
+                processedText = processedText.replace(productNameRegex, (match, productName) => {
                     // Don't double-wrap already linked products
                     if (processedText.includes(`onclick="showProductFromChat(${product.id})"`)) {
                         return match;
                     }
-                    return `<a href="#" class="product-link" onclick="showProductFromChat(${product.id})" style="color: var(--accent-blue); font-weight: 600; text-decoration: underline; cursor: pointer; background: rgba(37, 99, 235, 0.1); padding: 2px 6px; border-radius: 4px; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(37, 99, 235, 0.2)'" onmouseout="this.style.background='rgba(37, 99, 235, 0.1)'">${match}</a>`;
+                    return `<a href="#" class="product-link" onclick="showProductFromChat(${product.id})" style="color: var(--accent-blue); font-weight: 600; text-decoration: underline; cursor: pointer; background: rgba(37, 99, 235, 0.1); padding: 2px 6px; border-radius: 4px; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(37, 99, 235, 0.2)'" onmouseout="this.style.background='rgba(37, 99, 235, 0.1)'">${productName}</a>`;
                 });
             });
 
